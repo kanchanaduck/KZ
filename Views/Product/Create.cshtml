@@ -1,0 +1,103 @@
+@model PTum.Models.Tb_mst_product
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Tb_mst_product</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="prd_code" class="control-label"></label>
+                <input asp-for="prd_code" class="form-control" />
+                <span asp-validation-for="prd_code" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="prd_name" class="control-label"></label>
+                <input asp-for="prd_name" class="form-control" />
+                <span asp-validation-for="prd_name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="prd_img" class="control-label"></label>
+                <input asp-for="prd_img" class="form-control" />
+                <span asp-validation-for="prd_img" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="prd_category" class="control-label"></label>
+                <input asp-for="prd_category" class="form-control" />
+                <span asp-validation-for="prd_category" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="prd_cate_img" class="control-label"></label>
+                <input asp-for="prd_cate_img" class="form-control" />
+                <span asp-validation-for="prd_cate_img" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="prd_type" class="control-label"></label>
+                <input asp-for="prd_type" class="form-control" />
+                <span asp-validation-for="prd_type" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="prd_model" class="control-label"></label>
+                <input asp-for="prd_model" class="form-control" />
+                <span asp-validation-for="prd_model" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="prd_cpt_name" class="control-label"></label>
+                <input asp-for="prd_cpt_name" class="form-control" />
+                <span asp-validation-for="prd_cpt_name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="prd_fixasset_name" class="control-label"></label>
+                <input asp-for="prd_fixasset_name" class="form-control" />
+                <span asp-validation-for="prd_fixasset_name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="prd_serial_num" class="control-label"></label>
+                <input asp-for="prd_serial_num" class="form-control" />
+                <span asp-validation-for="prd_serial_num" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="prd_regis_datetime" class="control-label"></label>
+                <input asp-for="prd_regis_datetime" class="form-control" />
+                <span asp-validation-for="prd_regis_datetime" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="prd_regis_name" class="control-label"></label>
+                <input asp-for="prd_regis_name" class="form-control" />
+                <span asp-validation-for="prd_regis_name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="prd_last_uptime" class="control-label"></label>
+                <input asp-for="prd_last_uptime" class="form-control" />
+                <span asp-validation-for="prd_last_uptime" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="prd_last_upname" class="control-label"></label>
+                <input asp-for="prd_last_upname" class="form-control" />
+                <span asp-validation-for="prd_last_upname" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="prd_status" class="control-label"></label>
+                <input asp-for="prd_status" class="form-control" />
+                <span asp-validation-for="prd_status" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

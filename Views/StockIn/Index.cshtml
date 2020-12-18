@@ -1,0 +1,276 @@
+@model IEnumerable<PTum.Models.Tb_stock_in>
+
+@{
+    ViewData["Title"] = "Stock in";
+}
+
+<style>
+.uploader {
+  display: block;
+  clear: both;
+  margin: 0 auto;
+  width: 100%;
+}
+.uploader:hover{
+  cursor: pointer;
+}
+.uploader label {
+  float: left;
+  clear: both;
+  width: 100%;
+  padding: 2rem 1.5rem;
+  text-align: center;
+  background: #fff;
+  border-radius: 7px;
+  border: 3px dashed #eee;
+  -webkit-transition: all .2s ease;
+  transition: all .2s ease;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+}
+.uploader label.success{
+    background: #C5E1A5;
+}
+.uploader label.hover #start i.fas {
+  -webkit-transform: scale(0.8);
+          transform: scale(0.8);
+  opacity: 0.3;
+}
+.uploader #start {
+  float: left;
+  clear: both;
+  width: 100%;
+}
+.uploader #start.hidden {
+  display: none;
+}
+.uploader #start i.fas {
+  font-size: 50px;
+  margin-bottom: 1rem;
+  -webkit-transition: all .2s ease-in-out;
+  transition: all .2s ease-in-out;
+}
+.uploader #response {
+  float: left;
+  clear: both;
+  width: 100%;
+}
+.uploader input[type="file"] {
+  display: none;
+}
+.uploader div {
+  margin: 0 0 .5rem 0;
+  color: #5f6982;
+}
+</style>
+
+<div class="card">
+    <div class="card-body">
+        <table class="table table-sm table-bordered" id="stock-in">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.prd_code)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.prd_inqty)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.in_datetime)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.in_name)
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+        @foreach (var item in Model) {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.prd_code)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.prd_inqty)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.in_datetime)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.in_name)
+                    </td>
+                    <td class="text-center text-sm">
+                        <a asp-action="Details" asp-route-id="@item.id_in" class="text-info"><i class="far fa-eye"></i> Details</a>
+                        <a asp-action="Edit" asp-route-id="@item.id_in" class="text-primary"><i class="fas fa-pen"></i> Edit</a>
+                        <a asp-action="Delete" asp-route-id="@item.id_in" class="text-danger"><i class="far fa-trash-alt"></i> Delete</a>
+                    </td>
+                </tr>
+        }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Import stock</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form asp-action="create" method="post" enctype="multipart/form-data" id="form-upload" >
+      <div class="modal-body">
+            <div id="file-upload-form" class="uploader">
+                <input id="file-upload" type="file" name="files" accept=".xls,.xlsx" />
+                <label for="file-upload">
+                    <div id="start">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                        <div class="noti">Drop files here or click to upload..</div>
+                    </div>
+                </label>
+            </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-success" disabled>Upload</button>
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+@section scripts{
+<script>
+   
+
+    $("#stock-in").DataTable({
+        "responsive": true, 
+        "lengthChange": false, 
+        "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]], 
+        "autoWidth": false,
+         "order": [[ 2, "desc" ]],
+        "buttons": [
+            {
+                extend: "pageLength",
+                className: "btn-sm",
+            },
+            {
+                text: '<i class="fas fa-plus"></i> Import stock',
+                action: function ( e, dt, node, config ) {
+                    $('#myModal').modal('show')
+                },
+                className: "btn-sm btn-success",
+                init: function(api, node, config) {
+                    $(node).removeClass('btn-secondary')
+                }
+            },
+            {
+                text: '<i class="fas fa-file-download"></i> Download Template',
+                action: function ( e, dt, node, config ) {
+                    location.href="/StockIn/Excel"
+                },
+                className: "btn-sm btn-outline-secondary",
+                init: function(api, node, config) {
+                    $(node).removeClass('btn-secondary')
+                }
+            },
+            {
+                extend: "excel",
+                text: '<i class="far fa-file-excel"></i> Export excel',
+                className: "btn-sm btn-outline-secondary",
+                init: function(api, node, config) {
+                    $(node).removeClass('btn-secondary')
+                }
+            },
+        ]
+    }).buttons().container().appendTo('#stock-in_wrapper .col-md-6:eq(0)')
+
+    $('#file-upload').change(function(){
+        if( $(this).val() !=""){
+            var fileName = $(this).val().replace(/^.*[\\\/]/, '');
+            var ext = fileName.split('.').pop();
+            if(ext=="xlsx" || ext=="xls"){
+                $(this).closest('.uploader').find('label').addClass('success')
+                $(this).closest('.uploader').find('label .noti').text(fileName)
+                $(':input[type="submit"]').prop('disabled', false);
+            }  
+            else{
+                $(this).empty()
+                $(this).closest('.uploader').find('label').removeClass('success')
+                $(this).closest('.uploader').find('label .noti').text("Drop files here or click to upload..")
+                $(':input[type="submit"]').prop('disabled', true);
+            }
+        }
+        else{
+            $(':input[type="submit"]').prop('disabled', true);
+            $('#form-upload').addEventListener('submit', event => {
+                event.preventDefault();
+            });
+        }
+    })
+</script>
+
+<script>
+
+    $("#form-upload").submit(function(e){
+        var formData = new FormData($(this)[0])
+        console.log(formData)
+        $.ajax({
+        type: "POST",
+        url: '/Login/Check',
+        dataType: "json",
+        headers: { 
+          "RequestVerificationToken": $('input[name="__RequestVerificationToken"]').val(),
+        },
+        data: formData,
+        error: function (result) {
+          Toast.fire({
+            icon: 'error',
+            title: 'Please contact developer'
+          })
+        },
+        success: function (result) {
+          console.log(result);
+          if (result.status == true) {
+            Toast.fire({
+              icon: 'warning',
+              title: 'ล็อกอินยังไม่ได้ รอพี่ต่๋ำมาทำ'
+            })
+          }
+          else {
+            Toast.fire({
+              icon: 'error',
+              title: 'Login failed, please try again'
+            })
+          }
+        }
+      });
+        e.preventDefault();
+    });
+@*   async function AJAXSubmit (oFormElement) {
+    var resultElement = oFormElement.elements.namedItem("result");
+    const formData = new FormData(oFormElement);
+
+    try {
+    const response = await fetch(oFormElement.action, {
+      method: 'POST',
+      body: formData
+    });
+
+    if (response.ok) {
+      window.location.href = '/';
+    }
+
+    resultElement.value = 'Result: ' + response.status + ' ' + 
+      response.statusText;
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  } *@
+</script>
+}

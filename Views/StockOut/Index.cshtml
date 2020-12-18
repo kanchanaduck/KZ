@@ -1,0 +1,227 @@
+@model IEnumerable<PTum.Models.Tb_stock_out>
+
+@{
+    ViewData["Title"] = "Stock out";
+}
+
+<style>
+tr.group, tr.group:hover {
+    background-color: #FFCDD2 !important;
+}
+</style>
+
+<div class="card">
+    <div class="card-body">
+        <div class="form-group">
+            <label>Date range:</label>
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">
+                    <i class="far fa-calendar-alt"></i>
+                    </span>
+                </div>
+                <input type="text" class="form-control float-right" id="reservation">
+            </div><!-- /.input group -->
+        </div>  
+        <!-- Date and time range -->
+        <div class="form-group">
+            <label>Date range button:</label>
+            <div class="input-group">
+                <button type="button" class="btn btn-default float-right" id="daterange-btn">
+                    <i class="far fa-calendar-alt"></i> Date range picker
+                    <i class="fas fa-caret-down"></i>
+                </button>
+            </div>
+        </div><!-- /.form group --> 
+        
+        <!-- Date and time range -->
+        <div class="form-group">
+            <label>Date range button:</label>
+            <div class="input-group">
+                <button type="button" class="btn btn-default float-right" id="min" value="110001">
+                </button>
+            </div>
+        </div><!-- /.form group --> 
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <table class="table table-sm table-bordered" id="stock-out">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.pay_no)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.prd_code)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.prd_outqty)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.prd_outremark)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.prd_garron_no)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.prd_borrow_status)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.out_datetime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.out_name)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.pay_no)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.prd_code)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.prd_outqty)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.prd_outremark)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.prd_garron_no)
+            </td>
+            <td class="text-center">
+                @Html.DisplayFor(modelItem => item.prd_borrow_status)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.out_datetime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.out_name)
+            </td>
+        </tr>
+}
+    </tbody>
+        </table>
+    </div>
+</div>
+
+
+@section scripts{
+<script>
+   
+    var groupColumn = 0;
+    var table = $("#stock-out").DataTable({
+        "responsive": true, 
+        "lengthChange": false, 
+        "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+        "autoWidth": false,
+        "columnDefs": [
+            { "visible": false, "targets": groupColumn }
+        ],
+        "order": [[ groupColumn, 'desc' ]],
+        "drawCallback": function ( settings ) {
+            var api = this.api();
+            var rows = api.rows( {page:'current'} ).nodes();
+            var last=null;
+            api.column(groupColumn, {page:'current'} ).data().each( function ( group, i ) {
+                if ( last !== group ) {
+                    $(rows).eq( i ).before(
+                        '<tr class="group"><td colspan="7" class="font-weight-bold">'+group+'</td></tr>'
+                    );
+                    last = group;
+                }
+            } );
+        },
+        "buttons": [
+            {
+                extend: "pageLength",
+                className: "btn-sm",
+            },
+            {
+                extend: "excelHtml5",
+                text: '<i class="far fa-file-excel"></i> Export Excel',
+                className: "btn-sm btn-outline-secondary",
+                init: function(api, node, config) {
+                    $(node).removeClass('btn-secondary')
+                }
+            },
+        ]
+    })//.buttons().container().appendTo('#stock-out_wrapper .col-md-6:eq(0)')
+
+    $('#stock-out tbody').on( 'click', 'tr.group', function () {
+        console.log(table)
+        var currentOrder = table.order()[0];
+        if ( currentOrder[0] === groupColumn && currentOrder[1] === 'asc' ) {
+            table.order( [ groupColumn, 'desc' ] ).draw();
+        }
+        else {
+            table.order( [ groupColumn, 'asc' ] ).draw();
+        }
+    });
+
+    function toTable(date_start, date_end){
+        $.fn.dataTable.ext.search.push(
+            function( settings, data, dataIndex ) {
+                // var min = parseInt( $('#min_date').val(), 10 );
+                var min = parseInt( date_start, 10 );
+                // var max = parseInt( $('#max_date').val(), 10 ); 
+                var max = parseInt( date_end, 10 );
+                var date = parseFloat( data[6] ) || 0; // use data for the date column
+        
+                if ( ( isNaN( min ) && isNaN( max ) ) ||
+                    ( isNaN( min ) && date <= max ) ||
+                    ( min <= date   && isNaN( max ) ) ||
+                    ( min <= date   && date <= max ) )
+                {
+                    return true;
+                }
+                return false;
+            }
+        );         
+    }
+
+
+    $('#reservation').daterangepicker(
+        {
+            opens: 'left'
+        }, 
+        function(start, end, label) {
+            console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
+            toTable(start.format('YYYY-MM-DD'), end.format('YYYY-MM-DD'))   
+            table.draw(); 
+        }
+    );
+
+    //Date range as a button
+    $('#daterange-btn').daterangepicker(
+      {
+        ranges   : {
+          'Today'       : [moment(), moment()],
+          'Yesterday'   : [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+          'Last 7 Days' : [moment().subtract(6, 'days'), moment()],
+          'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+          'This Month'  : [moment().startOf('month'), moment().endOf('month')],
+          'Last Month'  : [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+        },
+        startDate: moment().subtract(29, 'days'),
+        endDate  : moment()
+      },
+      function (start, end) {
+        $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'))
+      }
+    )  
+
+    @* var table = $('#stock-out').DataTable();
+     
+    // Event listener to the two range filtering inputs to redraw on input
+    $('#min').click( function() {
+        table.search( this.value ).draw();
+    } ); *@
+    
+</script>
+}

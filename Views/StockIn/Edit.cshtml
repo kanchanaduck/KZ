@@ -1,0 +1,66 @@
+@model PTum.Models.Tb_stock_in
+
+@{
+    ViewData["Title"] = "Edit stock in";
+}
+
+<form asp-action="Edit">
+    <div class="col-md-4 offset-md-4">
+        <div class="card card-info">
+            <div class="card-header">
+                <h3 class="card-title">Edit stock in</h3>
+            </div>
+            <div class="card-body">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="id_in" />
+            <div class="form-group">
+                <label asp-for="prd_code" class="control-label"></label>
+                <input asp-for="prd_code" class="form-control" />
+                <span asp-validation-for="prd_code" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="prd_inqty" class="control-label"></label>
+                <input asp-for="prd_inqty" class="form-control" />
+                <span asp-validation-for="prd_inqty" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="in_status" class="control-label"></label>
+                <input asp-for="in_status" class="form-control" />
+                <span asp-validation-for="in_status" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="in_datetime" class="control-label"></label>
+                <input asp-for="in_datetime" class="form-control" />
+                <span asp-validation-for="in_datetime" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="in_name" class="control-label"></label>
+                <input asp-for="in_name" class="form-control" />
+                <span asp-validation-for="in_name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="in_last_uptime" class="control-label"></label>
+                <input asp-for="in_last_uptime" class="form-control" />
+                <span asp-validation-for="in_last_uptime" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="in_last_upname" class="control-label"></label>
+                <input asp-for="in_last_upname" class="form-control" />
+                <span asp-validation-for="in_last_upname" class="text-danger"></span>
+            </div>
+            <div class="form-group text-right">
+                    <input type="submit" value="Save" class="btn btn-primary" />
+                    <input type="button" value="Reset" class="btn btn-outline-secondary" onclick="location.reload()"/>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<div class="text-center">
+    <a asp-action="Index"><i class="fas fa-chevron-circle-left"></i> Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

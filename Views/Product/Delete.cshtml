@@ -1,0 +1,113 @@
+@model PTum.Models.Tb_mst_product
+
+@{
+    ViewData["Title"] = "Delete product";
+}
+
+<div class="card card-danger">
+    <div class="card-header">
+        <h3 class="card-title">Are you sure you want to delete this?</h3>
+    </div>
+    <div class="card-body">
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.prd_code)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.prd_code)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.prd_name)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.prd_name)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.prd_img)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.prd_img)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.prd_category)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.prd_category)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.prd_cate_img)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.prd_cate_img)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.prd_type)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.prd_type)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.prd_model)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.prd_model)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.prd_cpt_name)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.prd_cpt_name)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.prd_fixasset_name)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.prd_fixasset_name)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.prd_serial_num)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.prd_serial_num)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.prd_regis_datetime)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.prd_regis_datetime)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.prd_regis_name)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.prd_regis_name)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.prd_last_uptime)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.prd_last_uptime)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.prd_last_upname)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.prd_last_upname)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.prd_status)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.prd_status)
+        </dd>
+    </dl>    
+    <form asp-action="Delete" class="text-center">
+        <input type="hidden" asp-for="Id" />
+        <input type="submit" value="Delete" class="btn btn-danger" />
+    </form>
+    </div>
+</div>
+    
+<div class="text-center">
+    <a asp-action="Index"><i class="fas fa-chevron-circle-left"></i> Back to List</a>
+</div>

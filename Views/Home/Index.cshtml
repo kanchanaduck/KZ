@@ -1,0 +1,59 @@
+﻿@model IEnumerable<PTum.Models.Balance_V>
+
+@{
+    ViewData["Title"] = "Dashboard";
+}
+
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title"><i class="fas fa-file-alt"></i> Balance</h3>
+    </div>
+    <div class="card-body">
+        <table class="table table-sm table-bordered" id="qty-table">
+            <thead>
+                <tr>
+                    <th class="text-center">No</th>
+                    <th class="text-center">Image</th>
+                    <th class="text-center">Code</th>
+                    <th class="text-center">Name</th>
+                    <th class="text-center">Balance</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model) {
+                    var img = $@"\\cptfile01\Dept\2230\91_ICD_Manual\014496\KAIZEN\assets\pictureall\{item.prd_img}";
+                <tr>
+                    <td class="text-center">@item.rownum</td>
+                    <td class="text-center"><img src="@Url.Content(img)" width="50" height="50"/></td>
+                    <td>@item.prd_code</td>
+                    <td>@item.prd_name</td>
+                    <td class="text-right">@item.total_bl.ToString("N0")</td>
+                </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+@section scripts{
+<script>
+   
+
+    $("#qty-table").DataTable({
+        "responsive": true, 
+        "lengthChange": false, 
+        "autoWidth": false,
+        "buttons": [
+            {
+                extend: "excel",
+                text: '<i class="far fa-file-excel"></i> Export excel',
+                className: "btn-sm btn-outline-secondary",
+                init: function(api, node, config) {
+                    $(node).removeClass('btn-secondary')
+                }
+            },
+        ]
+    }).buttons().container().appendTo('#qty-table_wrapper .col-md-6:eq(0)')
+</script>
+}
