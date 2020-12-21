@@ -20,11 +20,6 @@ namespace Ptum.Controllers
         }
 
         // GET: StockOut
-        public async Task<IActionResult> Api()
-        {
-            // return Ok(await _context.Tb_stock_out.ToListAsync());
-            return View();
-        }
         public async Task<IActionResult> Index()
         {
             return View(await _context.Tb_stock_out.ToListAsync());
