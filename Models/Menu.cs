@@ -9,6 +9,7 @@ namespace PTum.Models
     {
         public string menu { get; set; }
         public string text { get; set; }
+        public string type { get; set; }
 
     }
 }

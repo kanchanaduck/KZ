@@ -1,4 +1,5 @@
 @model IEnumerable<PTum.Models.Tb_stock_out>
+
 @{
     ViewData["Title"] = "Stock out";
 }
@@ -85,36 +86,14 @@ tr.group, tr.group:hover {
                 @Html.DisplayFor(modelItem => item.prd_outqty)
             </td>
             <td>
-                @* @Html.DisplayFor(modelItem => item.prd_outremark) *@
-                @if (item.prd_outremark!="") 
-                { 
-                    @Html.DisplayFor(modelItem => item.prd_outremark)
-                }
-                else
-                { 
-                    @string.Format("-");
-                }
+                @Html.DisplayFor(modelItem => item.prd_outremark)
             </td>
             <td>
-                @* @Html.DisplayFor(modelItem => item.prd_garron_no) *@
-                @if (item.prd_garron_no!="") 
-                { 
-                    @Html.DisplayFor(modelItem => item.prd_garron_no)
-                }
-                else
-                { 
-                    @string.Format("-");
-                }
+                @Html.DisplayFor(modelItem => item.prd_garron_no)
             </td>
             <td class="text-center">
-                @if (item.prd_borrow_status) 
-                { 
-                    @string.Format("Y");
-                }
-                else
-                { 
-                    @string.Format("-");
-                }
+                @Html.DisplayFor(modelItem => item.prd_borrow_status)
+                @* @modelItem => item.prd_borrow_status *@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.out_datetime)
@@ -169,10 +148,13 @@ tr.group, tr.group:hover {
                     $(node).removeClass('btn-secondary')
                 },
                 autoFilter: true,
+                sheetName: 'StockOut',
                 customize: function ( xlsx ){
-                    var sheet = xlsx.xl.worksheets['sheet1.xml'];
-                    $('row c[r*="3"]', sheet).attr( 's', '25' );
-                    console.log($('row c', sheet))
+                    var sheet = xlsx.xl.worksheets['StockOut.xml'];
+                    $('row c[r*="10"]', sheet).attr( 's', '25' );
+                    @* $('row c[r^="C"]', sheet).each( function () {
+                        $(this).attr( 's', '20' );
+                    }); *@
                 }
                 @* title: `ICDGBStore_${minDate}_${maxDate}` *@
             },

@@ -15613,6 +15613,11 @@
       "FileKind": "mvc"
     },
     {
+      "FilePath": "c:\\Users\\014496\\Documents\\Visual Studio 2017\\Projects\\PTum\\Views\\StockOut\\Api.cshtml",
+      "TargetPath": "Views\\StockOut\\Api.cshtml",
+      "FileKind": "mvc"
+    },
+    {
       "FilePath": "c:\\Users\\014496\\Documents\\Visual Studio 2017\\Projects\\PTum\\Views\\StockIn\\Index.cshtml",
       "TargetPath": "Views\\StockIn\\Index.cshtml",
       "FileKind": "mvc"
@@ -15658,13 +15663,13 @@
       "FileKind": "mvc"
     },
     {
-      "FilePath": "c:\\Users\\014496\\Documents\\Visual Studio 2017\\Projects\\PTum\\Views\\Product\\Details.cshtml",
-      "TargetPath": "Views\\Product\\Details.cshtml",
+      "FilePath": "c:\\Users\\014496\\Documents\\Visual Studio 2017\\Projects\\PTum\\Views\\StockIn\\Index23.cshtml",
+      "TargetPath": "Views\\StockIn\\Index23.cshtml",
       "FileKind": "mvc"
     },
     {
-      "FilePath": "c:\\Users\\014496\\Documents\\Visual Studio 2017\\Projects\\PTum\\Views\\StockIn\\Index copy.cshtml",
-      "TargetPath": "Views\\StockIn\\Index copy.cshtml",
+      "FilePath": "c:\\Users\\014496\\Documents\\Visual Studio 2017\\Projects\\PTum\\Views\\Product\\Details.cshtml",
+      "TargetPath": "Views\\Product\\Details.cshtml",
       "FileKind": "mvc"
     },
     {

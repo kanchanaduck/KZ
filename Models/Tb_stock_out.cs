@@ -17,6 +17,7 @@ namespace PTum.Models
 
         [Display(Name = "Garoon No.")]
         public string prd_garron_no { get; set; }
+        [UIHint("prd_borrow_status")]
         [Display(Name = "Borrow")]
         public Boolean prd_borrow_status { get; set; }
 

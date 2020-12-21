@@ -467,4 +467,4 @@ C:\Users\014496\Documents\Visual Studio 2017\Projects\PTum\obj\Debug\net5.0\Razo
 C:\Users\014496\Documents\Visual Studio 2017\Projects\PTum\obj\Debug\net5.0\Razor\Views\User\Details.cshtml.g.cs
 C:\Users\014496\Documents\Visual Studio 2017\Projects\PTum\obj\Debug\net5.0\Razor\Views\User\Edit.cshtml.g.cs
 C:\Users\014496\Documents\Visual Studio 2017\Projects\PTum\obj\Debug\net5.0\Razor\Views\User\Index.cshtml.g.cs
-C:\Users\014496\Documents\Visual Studio 2017\Projects\PTum\obj\Debug\net5.0\Razor\Views\StockIn\Index copy.cshtml.g.cs
+C:\Users\014496\Documents\Visual Studio 2017\Projects\PTum\obj\Debug\net5.0\Razor\Views\StockIn\Index23.cshtml.g.cs

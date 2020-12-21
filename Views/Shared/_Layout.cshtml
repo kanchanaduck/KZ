@@ -5,20 +5,24 @@
   var controller = ViewContext.RouteData.Values["Controller"];
   List<Menu> menuItems = new List<Menu>() {
     new Menu{  
-      menu="Home",
-      text= "Home" 
+      menu = "Home",
+      text = "Home",
+      type = "Public" 
     },
     new Menu{  
-      menu="Product",
-      text= "Product" 
+      menu = "Product",
+      text = "Product",
+      type = "Private" 
     },
     new Menu{  
-      menu="StockIn",
-      text= "Stock in" 
+      menu = "StockIn",
+      text = "Stock in",
+      type = "Private"  
     },
     new Menu{  
-      menu="StockOut",
-      text= "Stock out" 
+      menu = "StockOut",
+      text = "Stock out",
+      type = "Public"  
     },
   };
 }
@@ -60,10 +64,21 @@
       </a>
     <!-- Left navbar links -->
     <ul class="navbar-nav">
-      @foreach(var item in menuItems.ToList()){
-        <li class="nav-item d-sm-inline-block @(Equals(controller,item.menu)? "active":"")">
-          <a href="~/@item.menu" class="nav-link">@item.text</a>
-        </li>
+      @if (!string.IsNullOrEmpty(HttpContextAccessor.HttpContext.Session.GetString("_Name"))){
+        @foreach(var item in menuItems.ToList()){
+          <li class="nav-item d-sm-inline-block @(Equals(controller,item.menu)? "active":"")">
+            <a href="~/@item.menu" class="nav-link">@item.text</a>
+          </li>
+        }
+      }
+      else{
+        @foreach(var item in menuItems.ToList()){
+          if(@item.type=="Public"){
+            <li class="nav-item d-sm-inline-block @(Equals(controller,item.menu)? "active":"")">
+              <a href="~/@item.menu" class="nav-link">@item.text</a>
+            </li>
+          }
+        }
       }
     </ul>
 
