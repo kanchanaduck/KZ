@@ -142,7 +142,8 @@ namespace Ptum.Controllers
                 }
             }
 
-            return Ok(new { count = files.Count, size });
+            return Ok(new { success= true, count = files.Count, size });
+            // return Ok(new { success= true });
             // return RedirectToAction(nameof(Index)); 
         }
 

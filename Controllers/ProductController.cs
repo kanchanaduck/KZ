@@ -93,7 +93,7 @@ namespace Ptum.Controllers
                         ExcelWorksheet worksheet = package.Workbook.Worksheets[0];
                         int rowCount = worksheet.Dimension.Rows;
                         int colCount = worksheet.Dimension.Columns;
-                        for (int row = 3; row <= rowCount; row++){
+                        for (int row = 4; row <= rowCount; row++){
                             _context.Add(new Tb_mst_product
                             {
                                 prd_category = worksheet.Cells[row, 2].Value.ToString().Trim(),
@@ -103,6 +103,7 @@ namespace Ptum.Controllers
                                 prd_cpt_name = worksheet.Cells[row, 5].Value.ToString().Trim(),
                                 prd_fixasset_name = worksheet.Cells[row, 6].Value.ToString().Trim(),
                                 prd_serial_num = worksheet.Cells[row, 7].Value.ToString().Trim(),
+                                prd_img = worksheet.Cells[row, 8].Value.ToString().Trim(),
                             });
                             await _context.SaveChangesAsync();
                         }
@@ -110,13 +111,9 @@ namespace Ptum.Controllers
                 }
             }
 
-            // return Ok(new { count = files.Count, size });
-            return RedirectToAction(nameof(Index)); 
+            return Ok(new { success=true, count = files.Count, size });
+            // return RedirectToAction(nameof(Index)); 
         }
-        // public async Task<IActionResult> Api()
-        // {
-        //     return Ok(new { count = 600 });
-        // }
 
         // GET: Product/Edit/5
         public async Task<IActionResult> Edit(int? id)

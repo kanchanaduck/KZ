@@ -153,7 +153,7 @@
         "lengthChange": false, 
         "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]], 
         "autoWidth": false,
-         "order": [[ 2, "desc" ]],
+        "order": [[ 2, "desc" ]],
         "buttons": [
             {
                 extend: "pageLength",
@@ -218,59 +218,48 @@
 <script>
 
     $("#form-upload").submit(function(e){
-        var formData = new FormData($(this)[0])
+      e.preventDefault();
+        @* var formData = new FormData($(this)) *@
+        @* var formData = $(this).serialize() *@
+        var formData = new FormData(this);
         console.log(formData)
         $.ajax({
-        type: "POST",
-        url: '/Login/Check',
-        dataType: "json",
-        headers: { 
-          "RequestVerificationToken": $('input[name="__RequestVerificationToken"]').val(),
-        },
-        data: formData,
-        error: function (result) {
-          Toast.fire({
-            icon: 'error',
-            title: 'Please contact developer'
+          type: "POST",
+          url: '/StockIn/Create',
+          dataType: "json",
+          async: false,
+          cache: false,
+          processData: false,
+          contentType: false,
+          headers: { 
+            "RequestVerificationToken": $('input[name="__RequestVerificationToken"]').val(),
+          },
+          data: formData,
+          error: function (result) {
+            Toast.fire({
+              icon: 'error',
+              title: 'Please contact developer'
           })
         },
         success: function (result) {
           console.log(result);
-          if (result.status == true) {
+          if (result.success) {
             Toast.fire({
-              icon: 'warning',
-              title: 'ล็อกอินยังไม่ได้ รอพี่ต่๋ำมาทำ'
+              icon: 'success',
+              title: 'Successfully upload file'
             })
+            setTimeout(function(){ location.reload() }, 3000);
           }
           else {
             Toast.fire({
               icon: 'error',
-              title: 'Login failed, please try again'
+              title: 'Please contact developer'
             })
           }
         }
       });
-        e.preventDefault();
-    });
-@*   async function AJAXSubmit (oFormElement) {
-    var resultElement = oFormElement.elements.namedItem("result");
-    const formData = new FormData(oFormElement);
-
-    try {
-    const response = await fetch(oFormElement.action, {
-      method: 'POST',
-      body: formData
+        
     });
 
-    if (response.ok) {
-      window.location.href = '/';
-    }
-
-    resultElement.value = 'Result: ' + response.status + ' ' + 
-      response.statusText;
-    } catch (error) {
-      console.error('Error:', error);
-    }
-  } *@
 </script>
 }

@@ -29,7 +29,7 @@ namespace Ptum
 
             services.AddSession(options =>
             {
-                options.IdleTimeout = TimeSpan.FromSeconds(10);
+                options.IdleTimeout = TimeSpan.FromSeconds(100000);
                 options.Cookie.HttpOnly = true;
                 options.Cookie.IsEssential = true;
             });
@@ -39,6 +39,10 @@ namespace Ptum
 
             services.AddHttpContextAccessor();
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
+            services.AddControllersWithViews()
+                .AddNewtonsoftJson(options =>
+                options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+            );
             services.AddSingleton<IConfiguration>(Configuration);
             services.AddDbContext<PTumContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("PTumContext")));

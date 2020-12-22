@@ -234,5 +234,48 @@
             });
         }
     })
+
+    $("#form-upload").submit(function(e){
+      e.preventDefault();
+        var formData = new FormData(this);
+        console.log(formData)
+        $.ajax({
+          type: "POST",
+          url: '/Product/Create',
+          dataType: "json",
+          async: false,
+          cache: false,
+          processData: false,
+          contentType: false,
+          headers: { 
+            "RequestVerificationToken": $('input[name="__RequestVerificationToken"]').val(),
+          },
+          data: formData,
+          error: function (result) {
+            Toast.fire({
+              icon: 'error',
+              title: 'Please contact developer'
+          })
+        },
+        success: function (result) {
+          console.log(result);
+          if (result.success) {
+            Toast.fire({
+              icon: 'success',
+              title: 'Successfully upload file'
+            })
+            setTimeout(function(){ location.reload() }, 3000);
+          }
+          else {
+            Toast.fire({
+              icon: 'error',
+              title: 'Please contact developer'
+            })
+          }
+        }
+      });
+    });
+
+
 </script>
 }

@@ -13,6 +13,7 @@ namespace PTum.Data
         public DbSet<PTum.Models.Tb_stock_in> Tb_stock_in { get; set; }
         public DbSet<PTum.Models.Balance_V> Balance_V { get; set; }
         public DbSet<PTum.Models.Tb_stock_out> Tb_stock_out { get; set; }
+        public DbSet<PTum.Models.Category> Category { get; set; }
 
 
     }

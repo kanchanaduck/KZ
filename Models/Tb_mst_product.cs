@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.AspNetCore.Http;
@@ -43,6 +44,10 @@ namespace PTum.Models
         public string prd_last_upname { get; set; }
 
         public string prd_status { get; set; }
+
+        public int id_model { get; set; }
+        [ForeignKey("id_model")]
+        public Model Model { get; set; }
 
     }
 }
