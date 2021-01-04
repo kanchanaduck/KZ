@@ -94,16 +94,24 @@ namespace Ptum.Controllers
                         int rowCount = worksheet.Dimension.Rows;
                         int colCount = worksheet.Dimension.Columns;
                         for (int row = 4; row <= rowCount; row++){
+                            Console.WriteLine(worksheet.Cells[row, 2].Value);
+                            Console.WriteLine(worksheet.Cells[row, 3].Value);
+                            Console.WriteLine(worksheet.Cells[row, 4].Value);
+                            Console.WriteLine(worksheet.Cells[row, 5].Value);
+                            Console.WriteLine(worksheet.Cells[row, 6].Value);
+                            Console.WriteLine(worksheet.Cells[row, 7].Value);
+                            Console.WriteLine(worksheet.Cells[row, 8].Value);
+                            // Console.WriteLine(worksheet.Cells[row, 9].Value);
                             _context.Add(new Tb_mst_product
                             {
-                                prd_category = worksheet.Cells[row, 2].Value.ToString().Trim(),
-                                prd_code = worksheet.Cells[row, 3].Value.ToString().Trim(),
-                                prd_type = worksheet.Cells[row, 4].Value.ToString().Trim(),
-                                prd_model = worksheet.Cells[row, 4].Value.ToString().Trim(),
-                                prd_cpt_name = worksheet.Cells[row, 5].Value.ToString().Trim(),
-                                prd_fixasset_name = worksheet.Cells[row, 6].Value.ToString().Trim(),
-                                prd_serial_num = worksheet.Cells[row, 7].Value.ToString().Trim(),
-                                prd_img = worksheet.Cells[row, 8].Value.ToString().Trim(),
+                                prd_category = worksheet.Cells[row, 2].Value==null? null:worksheet.Cells[row, 2].Value.ToString().Trim(),
+                                prd_code = worksheet.Cells[row, 3].Value==null? null:worksheet.Cells[row, 3].Value.ToString().Trim(),
+                                // prd_type = worksheet.Cells[row, 4].Value==null? null:worksheet.Cells[row, 4].Value.ToString().Trim(),
+                                // prd_model = worksheet.Cells[row, 5].Value==null? null:worksheet.Cells[row, 5].Value.ToString().Trim(),
+                                // prd_cpt_name = worksheet.Cells[row, 6].Value==null? null:worksheet.Cells[row, 6].Value.ToString().Trim(),
+                                // prd_fixasset_name = worksheet.Cells[row, 7].Value==null? null:worksheet.Cells[row, 7].Value.ToString().Trim(),
+                                // prd_serial_num = worksheet.Cells[row, 8].Value==null? null:worksheet.Cells[row, 8].Value.ToString().Trim(),
+                                // prd_img = string.Empty,
                             });
                             await _context.SaveChangesAsync();
                         }

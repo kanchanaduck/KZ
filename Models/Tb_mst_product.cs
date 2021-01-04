@@ -17,7 +17,7 @@ namespace PTum.Models
         public string prd_name { get; set; }
 
         [Display(Name = "Image")]
-        public string prd_img { get; set; }
+        public string? prd_img { get; set; }
 
         [Display(Name = "Category")]
         public string prd_category { get; set; }
@@ -44,10 +44,6 @@ namespace PTum.Models
         public string prd_last_upname { get; set; }
 
         public string prd_status { get; set; }
-
-        public int id_model { get; set; }
-        [ForeignKey("id_model")]
-        public Model Model { get; set; }
 
     }
 }
