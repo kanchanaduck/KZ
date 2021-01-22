@@ -15608,18 +15608,8 @@
       "FileKind": "mvc"
     },
     {
-      "FilePath": "c:\\Users\\014496\\Documents\\Visual Studio 2017\\Projects\\PTum\\Views\\Category\\Index.cshtml",
-      "TargetPath": "Views\\Category\\Index.cshtml",
-      "FileKind": "mvc"
-    },
-    {
       "FilePath": "c:\\Users\\014496\\Documents\\Visual Studio 2017\\Projects\\PTum\\Views\\User\\Create.cshtml",
       "TargetPath": "Views\\User\\Create.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "c:\\Users\\014496\\Documents\\Visual Studio 2017\\Projects\\PTum\\Views\\Category\\Edit.cshtml",
-      "TargetPath": "Views\\Category\\Edit.cshtml",
       "FileKind": "mvc"
     },
     {
@@ -15673,11 +15663,6 @@
       "FileKind": "mvc"
     },
     {
-      "FilePath": "c:\\Users\\014496\\Documents\\Visual Studio 2017\\Projects\\PTum\\Views\\Category\\Details.cshtml",
-      "TargetPath": "Views\\Category\\Details.cshtml",
-      "FileKind": "mvc"
-    },
-    {
       "FilePath": "c:\\Users\\014496\\Documents\\Visual Studio 2017\\Projects\\PTum\\Views\\Product\\Details.cshtml",
       "TargetPath": "Views\\Product\\Details.cshtml",
       "FileKind": "mvc"
@@ -15685,11 +15670,6 @@
     {
       "FilePath": "c:\\Users\\014496\\Documents\\Visual Studio 2017\\Projects\\PTum\\Views\\User\\Index.cshtml",
       "TargetPath": "Views\\User\\Index.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "c:\\Users\\014496\\Documents\\Visual Studio 2017\\Projects\\PTum\\Views\\Category\\Create.cshtml",
-      "TargetPath": "Views\\Category\\Create.cshtml",
       "FileKind": "mvc"
     },
     {
@@ -15730,11 +15710,6 @@
     {
       "FilePath": "c:\\Users\\014496\\Documents\\Visual Studio 2017\\Projects\\PTum\\Views\\Product\\Edit.cshtml",
       "TargetPath": "Views\\Product\\Edit.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "c:\\Users\\014496\\Documents\\Visual Studio 2017\\Projects\\PTum\\Views\\Category\\Delete.cshtml",
-      "TargetPath": "Views\\Category\\Delete.cshtml",
       "FileKind": "mvc"
     },
     {

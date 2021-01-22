@@ -9,6 +9,7 @@ namespace PTum.Data
             : base(options)
         {
         }
+        public DbSet<PTum.Models.View_BL_byname> View_BL_byname { get; set; }
         public DbSet<PTum.Models.Balance_V> Balance_V { get; set; }
         public DbSet<PTum.Models.Tb_mst_product> Tb_mst_product { get; set; }
         public DbSet<PTum.Models.Tb_stock_in> Tb_stock_in { get; set; }

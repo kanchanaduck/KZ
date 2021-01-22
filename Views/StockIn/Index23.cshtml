@@ -172,7 +172,7 @@
             {
                 text: '<i class="fas fa-file-download"></i> Download Template',
                 action: function ( e, dt, node, config ) {
-                    location.href="/StockIn/Excel"
+                    location.href='@Url.Action("StockIn", "Excel")'
                 },
                 className: "btn-sm btn-outline-secondary",
                 init: function(api, node, config) {

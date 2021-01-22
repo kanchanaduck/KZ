@@ -113,13 +113,23 @@
                 @Html.DisplayFor(modelItem => item.prd_name)
             </td>
             <td class="text-center">
-                <img src= "@Url.Content(img)" width="50" height="50"/>
+                @if(item.prd_img==null){
+                    <img src="~/img/products/no-photo.png" width="50" height="50"/>
+                }
+                else{  
+                    <img src="@Url.Content(img)" width="50" height="50"/>
+                }
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.prd_category)
             </td>
             <td class="text-center">
-                <img src= "@Url.Content(img_cat)" width="50" height="50"/>
+                @if(item.prd_cate_img==null){
+                    <img src="~/img/products/no-photo.png" width="50" height="50"/>
+                }
+                else{  
+                    <img src="@Url.Content(img_cat)" width="50" height="50"/>
+                }
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.prd_type)
@@ -138,6 +148,7 @@
 </table>
 </div>
 </div>
+
 
 <!-- Modal -->
 <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -192,7 +203,7 @@
             {
                 text: '<i class="fas fa-file-download"></i> Download Template',
                 action: function ( e, dt, node, config ) {
-                    location.href="Product/Excel"
+                    location.href='@Url.Action("Excel", "Product")'
                 },
                 className: "btn-sm btn-outline-secondary",
                 init: function(api, node, config) {
@@ -241,7 +252,7 @@
         console.log(formData)
         $.ajax({
           type: "POST",
-          url: '/Product/Create',
+          url: '@Url.Action("Create", "Product")',
           dataType: "json",
           async: false,
           cache: false,
@@ -264,7 +275,7 @@
               icon: 'success',
               title: 'Successfully upload file'
             })
-            setTimeout(function(){ location.reload() }, 3000);
+            setTimeout(function(){ location.reload() }, 1500);
           }
           else {
             Toast.fire({
@@ -275,6 +286,7 @@
         }
       });
     });
+
 
 
 </script>

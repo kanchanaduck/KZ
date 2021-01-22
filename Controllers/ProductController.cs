@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -12,7 +14,7 @@ using PTum.Data;
 using PTum.Models;
 
 namespace Ptum.Controllers
-{
+{    
     public class ProductController : Controller
     {
         private readonly PTumContext _context;
@@ -24,7 +26,25 @@ namespace Ptum.Controllers
         // GET: Product
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Tb_mst_product.ToListAsync());
+            var product_group_balance =  await _context.View_BL_byname 
+                        .GroupBy(x => new { x.prd_name, x.bl })
+                        .ToListAsync();
+
+            return Json(product_group_balance);
+            // return View(await _context.Tb_mst_product.ToListAsync());
+        }
+
+        public async Task<IActionResult> All()
+        {
+            var products = _context.Tb_mst_product
+                            .OrderBy(bb => bb.prd_code)
+                            .Select(bb => new
+                            {
+                                id = bb.prd_code,
+                                text = bb.prd_code
+                            })
+                            .ToListAsync();
+            return Json(await products);
         }
 
         public IActionResult Excel()
@@ -94,26 +114,23 @@ namespace Ptum.Controllers
                         int rowCount = worksheet.Dimension.Rows;
                         int colCount = worksheet.Dimension.Columns;
                         for (int row = 4; row <= rowCount; row++){
-                            Console.WriteLine(worksheet.Cells[row, 2].Value);
-                            Console.WriteLine(worksheet.Cells[row, 3].Value);
-                            Console.WriteLine(worksheet.Cells[row, 4].Value);
-                            Console.WriteLine(worksheet.Cells[row, 5].Value);
-                            Console.WriteLine(worksheet.Cells[row, 6].Value);
-                            Console.WriteLine(worksheet.Cells[row, 7].Value);
-                            Console.WriteLine(worksheet.Cells[row, 8].Value);
-                            // Console.WriteLine(worksheet.Cells[row, 9].Value);
-                            _context.Add(new Tb_mst_product
-                            {
-                                prd_category = worksheet.Cells[row, 2].Value==null? null:worksheet.Cells[row, 2].Value.ToString().Trim(),
-                                prd_code = worksheet.Cells[row, 3].Value==null? null:worksheet.Cells[row, 3].Value.ToString().Trim(),
-                                // prd_type = worksheet.Cells[row, 4].Value==null? null:worksheet.Cells[row, 4].Value.ToString().Trim(),
-                                // prd_model = worksheet.Cells[row, 5].Value==null? null:worksheet.Cells[row, 5].Value.ToString().Trim(),
-                                // prd_cpt_name = worksheet.Cells[row, 6].Value==null? null:worksheet.Cells[row, 6].Value.ToString().Trim(),
-                                // prd_fixasset_name = worksheet.Cells[row, 7].Value==null? null:worksheet.Cells[row, 7].Value.ToString().Trim(),
-                                // prd_serial_num = worksheet.Cells[row, 8].Value==null? null:worksheet.Cells[row, 8].Value.ToString().Trim(),
-                                // prd_img = string.Empty,
-                            });
-                            await _context.SaveChangesAsync();
+                            if(worksheet.Cells[row, 2].Value!=null){
+                                var query =_context.Add(new Tb_mst_product
+                                {
+                                    prd_category = worksheet.Cells[row, 2].Value==null? null:worksheet.Cells[row, 2].Value.ToString().Trim(),
+                                    prd_code = worksheet.Cells[row, 3].Value==null? null:worksheet.Cells[row, 3].Value.ToString().Trim(),
+                                    prd_name = worksheet.Cells[row, 4].Value==null? null:worksheet.Cells[row, 4].Value.ToString().Trim(),
+                                    prd_type = worksheet.Cells[row, 5].Value==null? null:worksheet.Cells[row, 5].Value.ToString().Trim(),
+                                    prd_model = worksheet.Cells[row, 6].Value==null? null:worksheet.Cells[row, 6].Value.ToString().Trim(),
+                                    prd_cpt_name = worksheet.Cells[row, 7].Value==null? null:worksheet.Cells[row, 7].Value.ToString().Trim(),
+                                    prd_fixasset_name = worksheet.Cells[row, 8].Value==null? null:worksheet.Cells[row, 8].Value.ToString().Trim(),
+                                    prd_serial_num = worksheet.Cells[row, 9].Value==null? null:worksheet.Cells[row, 9].Value.ToString().Trim(),
+                                    prd_img = worksheet.Cells[row, 10].Value==null? null:worksheet.Cells[row, 10].Value.ToString().Trim(),
+                                    prd_regis_datetime = DateTime.Now,
+                                    prd_regis_name = HttpContext.Session.GetString("_Name")
+                                });
+                                await _context.SaveChangesAsync();
+                            }
                         }
                     }
                 }

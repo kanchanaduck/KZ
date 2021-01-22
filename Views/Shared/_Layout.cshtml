@@ -38,6 +38,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge"> 
   <title>ICDGBStore - @ViewData["Title"]</title>
   <link rel="shortcut icon" type="image/png" href="~/AdminLTE3/img/logo.png"/>
   <!-- Google Font: Source Sans Pro -->
@@ -58,6 +59,9 @@
   <link rel="stylesheet" href="~/plugins/daterangepicker/daterangepicker.css">
    <!-- jstree -->
   <link rel="stylesheet" href="~/plugins/jstree/themes/default/style.min.css" />
+   <!-- select2 -->
+  <link rel="stylesheet" href="~/plugins/select2/css/select2.min.css" />   
+  <link rel="stylesheet" href="~/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css" />
 
 </head>
 <body class="hold-transition layout-top-nav">
@@ -157,6 +161,9 @@
 
 <!-- jQuery -->
 <script src="~/plugins/jquery/jquery.min.js"></script>
+<!-- Polyfill -->
+<script src="~/plugins/babel/babel.js"></script>
+<script src="~/plugins/babel-polyfill/polyfill.min.js"></script>
 <!-- Bootstrap 4 -->
 <script src="~/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <!-- DataTables  & Plugins -->
@@ -187,6 +194,8 @@
 <script src="~/plugins/daterangepicker/daterangepicker.js"></script>
 <!-- jstree -->
 <script src="~/plugins/jstree/jstree.min.js"></script>
+<!-- jstree -->
+<script src="~/plugins/select2/js/select2.min.js"></script>
 <!-- Page specific script -->
 @RenderSection("Scripts", required: false)
 <script>
@@ -197,7 +206,8 @@
       timer: 4000,
       timerProgressBar: true,
     });
-
+</script>
+<script type="text/babel">
   $('#btn-login').click(function(){
     Swal.fire({
       title: 'Login',

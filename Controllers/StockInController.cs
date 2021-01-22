@@ -127,13 +127,13 @@ namespace Ptum.Controllers
                         int rowCount = worksheet.Dimension.Rows;
                         int colCount = worksheet.Dimension.Columns;
                         for (int row = 3; row <= rowCount; row++){
-                            if(worksheet.Cells[row, 10].Value.ToString().Trim()!=""){
+                            if(worksheet.Cells[row, 4].Value!=null || worksheet.Cells[row, 10].Value.ToString().Trim()!=""){
                                 _context.Add(new Tb_stock_in
                                 {
                                     prd_code = worksheet.Cells[row, 4].Value.ToString().Trim(),
                                     prd_inqty = int.Parse(worksheet.Cells[row, 10].Value.ToString().Trim()),
                                     in_datetime = DateTime.Now,
-                                    in_name = "014496"
+                                    in_name = HttpContext.Session.GetString("_Name"),
                                 });
                                 await _context.SaveChangesAsync();
                             }

@@ -17,7 +17,7 @@ namespace PTum.Models
         public string prd_name { get; set; }
 
         [Display(Name = "Image")]
-        public string? prd_img { get; set; }
+        public string prd_img { get; set; }
 
         [Display(Name = "Category")]
         public string prd_category { get; set; }
@@ -35,11 +35,11 @@ namespace PTum.Models
 
         public string prd_serial_num { get; set; }
 
-        public string prd_regis_datetime { get; set; }
+        public DateTime? prd_regis_datetime { get; set; }
 
         public string prd_regis_name { get; set; }
 
-        public string prd_last_uptime { get; set; }
+        public DateTime? prd_last_uptime { get; set; }
 
         public string prd_last_upname { get; set; }
 

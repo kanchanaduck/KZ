@@ -4,6 +4,50 @@
     ViewData["Title"] = "Dashboard";
 }
 
+<div class="row">
+<div class="col-3">
+    <h2>Stock</h2>
+    <div class="info-box mb-3 bg-warning">
+        <span class="info-box-icon"><i class="fas fa-desktop"></i></span>
+        <div class="info-box-content">
+            <span class="info-box-text">Computer PC</span>
+            <span class="info-box-number">5,200</span>
+        </div>
+        <!-- /.info-box-content -->
+    </div>
+    <div class="info-box mb-3 bg-warning">
+        <span class="info-box-icon"><i class="fas fa-laptop"></i></span>
+        <div class="info-box-content">
+            <span class="info-box-text">Laptop</span>
+            <span class="info-box-number">5,200</span>
+        </div>
+        <!-- /.info-box-content -->
+    </div>
+    <div class="info-box">
+        <span class="info-box-icon bg-info elevation-1"><i class="fas fa-mouse"></i></span>
+        <div class="info-box-content">
+        <span class="info-box-text">Mouse</span>
+        <span class="info-box-number">
+            10
+        </span>
+        </div>
+        <!-- /.info-box-content -->
+    </div>
+    <!-- /.info-box -->
+    <div class="info-box">
+        <span class="info-box-icon bg-info elevation-1"><i class="fas fa-plug"></i></span>
+        <div class="info-box-content">
+        <span class="info-box-text">Plug</span>
+        <span class="info-box-number">
+            10
+        </span>
+        </div>
+        <!-- /.info-box-content -->
+    </div>
+    <!-- /.info-box -->
+</div>
+
+<div class="col-9">
 <div class="card">
     <div class="card-header">
         <h3 class="card-title"><i class="fas fa-file-alt"></i> Balance</h3>
@@ -24,7 +68,14 @@
                     var img = $@"\\cptfile01\Dept\2230\91_ICD_Manual\014496\KAIZEN\assets\pictureall\{item.prd_img}";
                 <tr>
                     <td class="text-center">@item.rownum</td>
-                    <td class="text-center"><img src="@Url.Content(img)" width="50" height="50"/></td>
+                    <td class="text-center">
+                        @if(item.prd_img==null){
+                            <img src="~/img/products/no-photo.png" width="50" height="50"/>
+                        }
+                        else{  
+                            <img src="@Url.Content(img)" width="50" height="50"/>
+                        }
+                    </td>
                     <td>@item.prd_code</td>
                     <td>@item.prd_name</td>
                     <td class="text-right">@item.total_bl.ToString("N0")</td>
@@ -34,7 +85,8 @@
         </table>
     </div>
 </div>
-
+</div>
+</div>
 
 @section scripts{
 <script>
@@ -46,11 +98,16 @@
         "autoWidth": false,
         "buttons": [
             {
-                extend: "excel",
+                extend: "excelHtml5",
                 text: '<i class="far fa-file-excel"></i> Export excel',
                 className: "btn-sm btn-outline-secondary",
                 init: function(api, node, config) {
                     $(node).removeClass('btn-secondary')
+                },
+                autoFilter: true,
+                sheetName: 'Product',
+                exportOptions: {
+                    columns: [0,2,3,4]
                 }
             },
         ]
