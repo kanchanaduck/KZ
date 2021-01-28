@@ -15658,11 +15658,6 @@
       "FileKind": "mvc"
     },
     {
-      "FilePath": "c:\\Users\\014496\\Documents\\Visual Studio 2017\\Projects\\PTum\\Views\\StockIn\\Index23.cshtml",
-      "TargetPath": "Views\\StockIn\\Index23.cshtml",
-      "FileKind": "mvc"
-    },
-    {
       "FilePath": "c:\\Users\\014496\\Documents\\Visual Studio 2017\\Projects\\PTum\\Views\\Product\\Details.cshtml",
       "TargetPath": "Views\\Product\\Details.cshtml",
       "FileKind": "mvc"

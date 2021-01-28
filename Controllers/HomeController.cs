@@ -24,5 +24,6 @@ namespace Ptum.Controllers
         {
             return View(await _context.Balance_V.ToListAsync());
         }
+
     }
 }

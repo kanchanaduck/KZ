@@ -59,6 +59,9 @@ namespace Ptum.Controllers
                     worksheet.Cells[recordIndex, 4].Value = item.prd_code; 
                     worksheet.Cells[recordIndex, 5].Value = item.prd_type; 
                     worksheet.Cells[recordIndex, 6].Value = item.prd_model; 
+                    worksheet.Cells[recordIndex, 7].Value = item.prd_cpt_name; 
+                    worksheet.Cells[recordIndex, 8].Value = item.prd_fixasset_name; 
+                    worksheet.Cells[recordIndex, 9].Value = item.prd_serial_num; 
                     recordIndex++; 
                 } 
                 package.SaveAs(new FileInfo(filepath));
@@ -143,8 +146,6 @@ namespace Ptum.Controllers
             }
 
             return Ok(new { success= true, count = files.Count, size });
-            // return Ok(new { success= true });
-            // return RedirectToAction(nameof(Index)); 
         }
 
         // GET: StockIn/Edit/5

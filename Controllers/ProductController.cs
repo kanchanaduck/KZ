@@ -26,25 +26,27 @@ namespace Ptum.Controllers
         // GET: Product
         public async Task<IActionResult> Index()
         {
-            var product_group_balance =  await _context.View_BL_byname 
-                        .GroupBy(x => new { x.prd_name, x.bl })
-                        .ToListAsync();
-
-            return Json(product_group_balance);
-            // return View(await _context.Tb_mst_product.ToListAsync());
+            return View(await _context.Tb_mst_product.ToListAsync());
         }
-
         public async Task<IActionResult> All()
         {
-            var products = _context.Tb_mst_product
-                            .OrderBy(bb => bb.prd_code)
-                            .Select(bb => new
-                            {
-                                id = bb.prd_code,
-                                text = bb.prd_code
-                            })
+            var data = await _context.Tb_mst_product
+                         .Select(e=>new {e.Id, e.prd_code}) 
+                         .Distinct()
+                         .ToListAsync();
+            return  Json(data);
+        }
+
+        public async Task<IActionResult> Balance()
+        {
+            // var balance = _context.View_BL_byname 
+            //             .AsEnumerable()
+            //             .GroupBy(x => new { x.prd_name, x.bl })
+            //             .ToList();
+            var balance = await _context.View_BL_byname.FromSqlRaw(
+                            "SELECT prd_name, bl FROM View_BL_byname group by prd_name, bl")
                             .ToListAsync();
-            return Json(await products);
+            return Json(balance);
         }
 
         public IActionResult Excel()
@@ -125,7 +127,6 @@ namespace Ptum.Controllers
                                     prd_cpt_name = worksheet.Cells[row, 7].Value==null? null:worksheet.Cells[row, 7].Value.ToString().Trim(),
                                     prd_fixasset_name = worksheet.Cells[row, 8].Value==null? null:worksheet.Cells[row, 8].Value.ToString().Trim(),
                                     prd_serial_num = worksheet.Cells[row, 9].Value==null? null:worksheet.Cells[row, 9].Value.ToString().Trim(),
-                                    prd_img = worksheet.Cells[row, 10].Value==null? null:worksheet.Cells[row, 10].Value.ToString().Trim(),
                                     prd_regis_datetime = DateTime.Now,
                                     prd_regis_name = HttpContext.Session.GetString("_Name")
                                 });
