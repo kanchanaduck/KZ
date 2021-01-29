@@ -39,13 +39,16 @@ namespace Ptum.Controllers
 
         public async Task<IActionResult> Balance()
         {
-            // var balance = _context.View_BL_byname 
-            //             .AsEnumerable()
-            //             .GroupBy(x => new { x.prd_name, x.bl })
-            //             .ToList();
-            var balance = await _context.View_BL_byname.FromSqlRaw(
-                            "SELECT prd_name, bl FROM View_BL_byname group by prd_name, bl")
-                            .ToListAsync();
+            var query = $@"SELECT prd_category, prd_name, bl, prd_img 
+                            FROM View_BL_byname 
+                            group by prd_category, bl,  prd_img , prd_name 
+                            ORDER BY case when prd_category = 'Computer PC' then 1
+                                when prd_category = 'Display Screen' then 2
+                                when prd_category = 'Accessories' then 3
+                                else 4
+                            end asc,
+                            prd_img";
+            var balance = await _context.View_BL_byname.FromSqlRaw(query).ToListAsync();
             return Json(balance);
         }
 

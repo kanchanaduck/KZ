@@ -135,7 +135,14 @@ C:\Users\014496\Documents\Visual Studio 2017\Projects\PTum\bin\Debug\net5.0\publ
 C:\Users\014496\Documents\Visual Studio 2017\Projects\PTum\bin\Debug\net5.0\publish\wwwroot\excel\_master\Template_StockIN.xlsx
 C:\Users\014496\Documents\Visual Studio 2017\Projects\PTum\bin\Debug\net5.0\publish\wwwroot\favicon.ico
 C:\Users\014496\Documents\Visual Studio 2017\Projects\PTum\bin\Debug\net5.0\publish\wwwroot\img\folder.png
+C:\Users\014496\Documents\Visual Studio 2017\Projects\PTum\bin\Debug\net5.0\publish\wwwroot\img\products\012-sata.png
+C:\Users\014496\Documents\Visual Studio 2017\Projects\PTum\bin\Debug\net5.0\publish\wwwroot\img\products\022-mouse-1.png
+C:\Users\014496\Documents\Visual Studio 2017\Projects\PTum\bin\Debug\net5.0\publish\wwwroot\img\products\023-monitor.png
+C:\Users\014496\Documents\Visual Studio 2017\Projects\PTum\bin\Debug\net5.0\publish\wwwroot\img\products\034-keyboard.png
+C:\Users\014496\Documents\Visual Studio 2017\Projects\PTum\bin\Debug\net5.0\publish\wwwroot\img\products\equipment.png
+C:\Users\014496\Documents\Visual Studio 2017\Projects\PTum\bin\Debug\net5.0\publish\wwwroot\img\products\gaming.png
 C:\Users\014496\Documents\Visual Studio 2017\Projects\PTum\bin\Debug\net5.0\publish\wwwroot\img\products\no-photo.png
+C:\Users\014496\Documents\Visual Studio 2017\Projects\PTum\bin\Debug\net5.0\publish\wwwroot\img\products\power-strip.png
 C:\Users\014496\Documents\Visual Studio 2017\Projects\PTum\bin\Debug\net5.0\publish\wwwroot\img\word.png
 C:\Users\014496\Documents\Visual Studio 2017\Projects\PTum\bin\Debug\net5.0\publish\wwwroot\js\site.js
 C:\Users\014496\Documents\Visual Studio 2017\Projects\PTum\bin\Debug\net5.0\publish\wwwroot\lib\bootstrap\dist\css\bootstrap-grid.css

@@ -10,8 +10,11 @@
 
 <div class="row" id="stock">
     <div class="col-3 box">
-        <div class="info-box">
-            <span class="info-box-icon bg-info elevation-1"><i class="fas fa-mouse"></i></span>
+        <div class="info-box" display="cursor:pointer;">
+            <span class="info-box-icon bg-white">
+                <img src="~/img/products/gaming.png" width="50">
+                @* <i class="far fa-envelope"></i> *@
+            </span>
             <div class="info-box-content">
             <span class="info-box-text">Mouse</span>
             <span class="info-box-number">
@@ -39,7 +42,7 @@
             </thead>
             <tbody>
                 @foreach (var item in Model) {
-                    var img = $@"\\cptfile01\Dept\2230\91_ICD_Manual\014496\KAIZEN\assets\pictureall\{item.prd_img}";
+                    var img = $@"~/img/products/{item.prd_img}";
                 <tr>
                     <td class="text-center">@item.rownum</td>
                     <td class="text-center">
@@ -93,14 +96,16 @@
     })
     .done(function( data ) {
         console.log(data)
+        var path = '@Url.Content("~/img/products/")'
         $.each(data, function(i, d) {
             var box = $('#stock .box:last').clone()
+            box.find('img').attr("src",path+d.prd_img)
             box.find('.info-box-text').text(d.prd_name)
             box.find('.info-box-number').text(d.bl)
             $('#stock').append(box)
             $('#stock .box:first').hide()
         });
-    })
+    }) 
 
 
 </script>

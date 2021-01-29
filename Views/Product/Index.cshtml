@@ -100,8 +100,8 @@
     </thead>
     <tbody>
     @foreach (var item in Model) {
-        var img = $@"\\cptfile01\Dept\2230\91_ICD_Manual\014496\KAIZEN\assets\pictureall\{item.prd_img}";
-        var img_cat = $@"\\cptfile01\Dept\2230\91_ICD_Manual\014496\KAIZEN\assets\pictureall\{item.prd_cate_img}";
+        var img = $@"~/img/products/{item.prd_img}";
+        var img_cat = $@"~/img/products/{item.prd_cate_img}";
         <tr>
             @* <td class="text-center">
                 <input type="checkbox">
