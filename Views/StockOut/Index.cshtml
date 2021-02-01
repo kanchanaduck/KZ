@@ -46,28 +46,28 @@ tr.group, tr.group:hover {
         <table class="table table-sm table-bordered" id="stock-out">
     <thead>
         <tr>
-            <th>
+            <th class="text-center">
                 @Html.DisplayNameFor(model => model.pay_no)
             </th>
-            <th>
+            <th class="text-center">
                 @Html.DisplayNameFor(model => model.prd_code)
             </th>
-            <th>
+            <th class="text-center">
                 @Html.DisplayNameFor(model => model.prd_outqty)
             </th>
-            <th>
+            <th class="text-center">
                 @Html.DisplayNameFor(model => model.prd_outremark)
             </th>
-            <th>
+            <th class="text-center">
                 @Html.DisplayNameFor(model => model.prd_garron_no)
             </th>
-            <th>
+            <th class="text-center">
                 @Html.DisplayNameFor(model => model.prd_borrow_status)
             </th>
-            <th>
+            <th class="text-center">
                 @Html.DisplayNameFor(model => model.out_datetime)
             </th>
-            <th>
+            <th class="text-center">
                 @Html.DisplayNameFor(model => model.out_name)
             </th>
         </tr>
@@ -81,7 +81,7 @@ tr.group, tr.group:hover {
             <td>
                 @Html.DisplayFor(modelItem => item.prd_code)
             </td>
-            <td>
+            <td class="text-center">
                 @Html.DisplayFor(modelItem => item.prd_outqty)
             </td>
             <td>
@@ -117,7 +117,8 @@ tr.group, tr.group:hover {
                 }
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.out_datetime)
+                @* @Html.DisplayFor(modelItem => item.out_datetime) *@
+                @Convert.ToDateTime(item.out_datetime).ToString("yyyy-MM-dd HH:mm:ss")
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.out_name)
@@ -162,18 +163,12 @@ tr.group, tr.group:hover {
             },
             {
                 extend: "excelHtml5",
-                text: '<i class="far fa-file-excel"></i> Report',
-                className: "btn-sm btn-outline-danger",
+                text: '<i class="far fa-file-excel"></i> Export excel',
+                className: "btn-sm btn-outline-secondary",
                 init: function(api, node, config) {
                     $(node).removeClass('btn-secondary')
                 },
                 autoFilter: true,
-                customize: function ( xlsx ){
-                    var sheet = xlsx.xl.worksheets['sheet1.xml'];
-                    $('row c[r*="3"]', sheet).attr( 's', '25' );
-                    console.log($('row c', sheet))
-                }
-                @* title: `ICDGBStore_${minDate}_${maxDate}` *@
             },
         ]
     })
@@ -207,12 +202,15 @@ tr.group, tr.group:hover {
         value: new Date(maxDate).toISOString(),
         limiter: 'maxDate'
     }];
-    
+
 
     $('#reservation').daterangepicker({
             opens: 'left',
             "startDate": minDate,
             "endDate": maxDate,
+            locale: {
+                format: 'YYYY-MM-DD' 
+            },
         }, 
         function(start, end, label) {
             console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));

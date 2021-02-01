@@ -188,10 +188,15 @@
     $("#product-tb").DataTable({
         "responsive": true, 
         "lengthChange": false, 
+        "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]], 
         "autoWidth": false,
         "buttons": [
             {
-                text: '<i class="fas fa-plus"></i> Create new',
+                extend: "pageLength",
+                className: "btn-sm",
+            },
+            {
+                text: '<i class="fas fa-plus"></i> Import product',
                 action: function ( e, dt, node, config ) {
                     $('#myModal').modal('show')
                 },
@@ -201,7 +206,7 @@
                 }
             },
             {
-                text: '<i class="fas fa-file-download"></i> Download Template',
+                text: '<i class="fas fa-file-download"></i> Download template',
                 action: function ( e, dt, node, config ) {
                     location.href='@Url.Action("Excel", "Product")'
                 },

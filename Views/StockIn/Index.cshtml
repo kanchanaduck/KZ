@@ -68,19 +68,52 @@
 
 <div class="card">
     <div class="card-body">
+        <div class="row">
+            <div class="col-md-3 col-sm-6">
+                <div class="form-group">
+                    <label>Date range:</label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">
+                                <i class="far fa-calendar-alt"></i>
+                            </span>
+                        </div>
+                        <input type="text" class="form-control float-right" id="reservation">
+                    </div><!-- /.input group -->
+                </div>  
+            </div>
+            <div class="col-md-3 col-sm-6">
+            <!-- Date and time range -->
+                <div class="form-group">
+                    <label>Date range button:</label>
+                    <div class="input-group">
+                        <button type="button" class="btn btn-default float-right" id="daterange-btn">
+                            <i class="far fa-calendar-alt"></i> Choose range
+                            <i class="fas fa-caret-down"></i>
+                        </button>
+                    </div>
+                </div><!-- /.form group --> 
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="card">
+    <div class="card-body">
         <table class="table table-sm table-bordered" id="stock-in">
             <thead>
                 <tr>
-                    <th>
+                    <th class="text-center">
                         @Html.DisplayNameFor(model => model.prd_code)
                     </th>
-                    <th>
+                    <th class="text-center">
                         @Html.DisplayNameFor(model => model.prd_inqty)
                     </th>
-                    <th>
+                    <th class="text-center">
                         @Html.DisplayNameFor(model => model.in_datetime)
                     </th>
-                    <th>
+                    <th class="text-center">
                         @Html.DisplayNameFor(model => model.in_name)
                     </th>
                     <th></th>
@@ -96,7 +129,8 @@
                         @Html.DisplayFor(modelItem => item.prd_inqty)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.in_datetime)
+                        @* @Html.DisplayFor(modelItem => item.in_datetime)  *@
+                        @Convert.ToDateTime(item.in_datetime).ToString("yyyy-MM-dd HH:mm:ss")
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.in_name)
@@ -176,7 +210,7 @@
 <script type="text/babel">
    
 
-    $("#stock-in").DataTable({
+    var table = $("#stock-in").DataTable({
         "responsive": true, 
         "lengthChange": false, 
         "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]], 
@@ -198,7 +232,7 @@
                 }
             },
             {
-                text: '<i class="fas fa-file-download"></i> Download Template',
+                text: '<i class="fas fa-file-download"></i> Download template',
                 action: function ( e, dt, node, config ) {
                     location.href='@Url.Action("Excel","StockIn")'
                 },
@@ -216,7 +250,72 @@
                 }
             },
         ]
-    }).buttons().container().appendTo('#stock-in_wrapper .col-md-6:eq(0)')
+    })
+    
+    table.buttons().container().appendTo('#stock-in_wrapper .col-md-6:eq(0)')
+
+    var dates = table.column(2).data().unique().sort();
+    var minDate = dates[0];
+    var maxDate = dates[dates.length-1];
+
+    var datepickers = [{
+        id: 'startdate',
+        coid: 'enddate',
+        value: new Date(minDate).toISOString(),
+        limiter: 'minDate'
+    }, 
+    {
+        id: 'enddate',
+        coid: 'startdate',
+        value: new Date(maxDate).toISOString(),
+        limiter: 'maxDate'
+    }];
+
+    console.log(datepickers)
+
+    $('#reservation').daterangepicker({
+            opens: 'left',
+            "startDate": minDate,
+            "endDate": maxDate,
+            locale: {
+                format: 'YYYY-MM-DD' 
+            },
+        }, 
+        function(start, end, label) {
+            console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
+            datepickers[0].value = new Date(start).toISOString(); 
+            datepickers[1].value = new Date(end).toISOString(); 
+            table.draw();
+        }
+    )
+
+    //External search function
+    $.fn.DataTable.ext.search.push((settings, row) => {
+        var rowDate = new Date(row[2]).toISOString();
+        return (rowDate >= datepickers[0].value || datepickers[0].value == null) && (rowDate <= datepickers[1].value || datepickers[1].value == null);
+    });
+
+    //Date range as a button
+    $('#daterange-btn').daterangepicker(
+      {
+        ranges   : {
+          'Today'       : [moment(), moment()],
+          'Yesterday'   : [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+          'Last 7 Days' : [moment().subtract(6, 'days'), moment()],
+          'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+          'This Month'  : [moment().startOf('month'), moment().endOf('month')],
+          'Last Month'  : [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+        },
+        startDate: moment().subtract(29, 'days'),
+        endDate  : moment()
+      },
+      function (start, end) {
+            console.log(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'))
+            datepickers[0].value = new Date(start).toISOString(); 
+            datepickers[1].value = new Date(end).toISOString(); 
+            table.draw();
+      }
+    )  
 
     $('#file-upload').change(function(){
         if( $(this).val() !=""){
