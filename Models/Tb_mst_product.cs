@@ -15,12 +15,13 @@ namespace PTum.Models
 
         [Display(Name = "Name")]
         public string prd_name { get; set; }
-
+        [NotMapped]
         [Display(Name = "Image")]
         public string prd_img { get; set; }
 
         [Display(Name = "Category")]
         public string prd_category { get; set; }
+        [NotMapped]
 
         [Display(Name = "Category Image")]      
         public string prd_cate_img { get; set; }
@@ -46,4 +47,7 @@ namespace PTum.Models
         public string prd_status { get; set; }
 
     }
+   
+
+
 }

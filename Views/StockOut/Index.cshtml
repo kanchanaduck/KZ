@@ -1,4 +1,6 @@
 @model IEnumerable<PTum.Models.Tb_stock_out>
+@using Microsoft.Extensions.Configuration
+@inject IConfiguration Configuration
 @{
     ViewData["Title"] = "Stock out";
 }
@@ -12,7 +14,7 @@ tr.group, tr.group:hover {
 <div class="card">
     <div class="card-body">
         <div class="row">
-            <div class="col-md-3 col-sm-6">
+            @* <div class="col-md-3 col-sm-6">
                 <div class="form-group">
                     <label>Date range:</label>
                     <div class="input-group">
@@ -24,7 +26,7 @@ tr.group, tr.group:hover {
                         <input type="text" class="form-control float-right" id="reservation">
                     </div><!-- /.input group -->
                 </div>  
-            </div>
+            </div> *@
             <div class="col-md-3 col-sm-6">
             <!-- Date and time range -->
                 <div class="form-group">
@@ -186,9 +188,8 @@ tr.group, tr.group:hover {
         }
     });
 
-    var dates = table.column(6).data().unique().sort();
-    var minDate = dates[0];
-    var maxDate = dates[dates.length-1];
+    var minDate = new Date("@Configuration["MyProject:date_start_project"]");
+    var maxDate = new Date()
 
     var datepickers = [{
         id: 'startdate',
@@ -202,6 +203,7 @@ tr.group, tr.group:hover {
         value: new Date(maxDate).toISOString(),
         limiter: 'maxDate'
     }];
+
 
 
     $('#reservation').daterangepicker({
@@ -222,7 +224,9 @@ tr.group, tr.group:hover {
 
     //External search function
     $.fn.DataTable.ext.search.push((settings, row) => {
-        var rowDate = new Date(row[6]).toISOString();
+        var rawDate = moment(row[6]).format("YYYY-MM-DDTHH:mm:ss");
+        var rowDate = new Date(rawDate).toISOString();
+        @* rowDate = new Date(row[6]).toISOString(); *@
         return (rowDate >= datepickers[0].value || datepickers[0].value == null) && (rowDate <= datepickers[1].value || datepickers[1].value == null);
     });
 

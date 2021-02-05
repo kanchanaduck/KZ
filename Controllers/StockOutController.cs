@@ -5,11 +5,13 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 using PTum.Data;
 using PTum.Models;
 
 namespace Ptum.Controllers
 {
+
     public class StockOutController : Controller
     {
         private readonly PTumContext _context;

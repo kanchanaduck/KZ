@@ -1,4 +1,6 @@
 @model IEnumerable<PTum.Models.Tb_stock_in>
+@using Microsoft.Extensions.Configuration
+@inject IConfiguration Configuration
 
 @{
     ViewData["Title"] = "Stock in";
@@ -70,19 +72,6 @@
     <div class="card-body">
         <div class="row">
             <div class="col-md-3 col-sm-6">
-                <div class="form-group">
-                    <label>Date range:</label>
-                    <div class="input-group">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text">
-                                <i class="far fa-calendar-alt"></i>
-                            </span>
-                        </div>
-                        <input type="text" class="form-control float-right" id="reservation">
-                    </div><!-- /.input group -->
-                </div>  
-            </div>
-            <div class="col-md-3 col-sm-6">
             <!-- Date and time range -->
                 <div class="form-group">
                     <label>Date range button:</label>
@@ -137,7 +126,7 @@
                     </td>
                     <td class="text-center text-sm">
                         <a asp-action="Details" asp-route-id="@item.id_in" class="text-info"><i class="far fa-eye"></i> Details</a>
-                        <a asp-action="Edit" asp-route-id="@item.id_in" class="text-primary"><i class="fas fa-pen"></i> Edit</a>
+                        @* <a asp-action="Edit" asp-route-id="@item.id_in" class="text-primary"><i class="fas fa-pen"></i> Edit</a> *@
                         <a asp-action="Delete" asp-route-id="@item.id_in" class="text-danger"><i class="far fa-trash-alt"></i> Delete</a>
                     </td>
                 </tr>
@@ -146,34 +135,6 @@
         </table>
     </div>
 </div>
-
-@* <div class="card card-success">
-  <div class="card-header">
-    <h3 class="card-title">Add stock</h3>
-  </div>
-  <div class="card-body">
-    <table id="table-qty" class="table table-sm table-bordered col-sm-6 mb-3">
-      <thead>
-        <tr>
-          <th width="60%">Product code</th>
-          <th>Qty</th>
-        </tr>
-      </thead>
-      <tbody>
-          <tr>
-            <td>
-              <select class="product_name_list form-control" required>
-              </select>
-            </td>
-            <td>
-                <input type="number" class="form-control" placeholder="Qty">
-            </td>
-          </tr>
-      </tbody>
-    </table>  
-    <button class="btn btn-sm btn-outline-success" id="qty-add-row"><i class="fa fa-plus"></i> Add</button> 
- </div>
-</div> *@
 
 <!-- Modal -->
 <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -254,9 +215,8 @@
     
     table.buttons().container().appendTo('#stock-in_wrapper .col-md-6:eq(0)')
 
-    var dates = table.column(2).data().unique().sort();
-    var minDate = dates[0];
-    var maxDate = dates[dates.length-1];
+    var minDate = new Date("@Configuration["MyProject:date_start_project"]");
+    var maxDate = new Date()
 
     var datepickers = [{
         id: 'startdate',
@@ -271,7 +231,7 @@
         limiter: 'maxDate'
     }];
 
-    console.log(datepickers)
+
 
     $('#reservation').daterangepicker({
             opens: 'left',
@@ -291,7 +251,9 @@
 
     //External search function
     $.fn.DataTable.ext.search.push((settings, row) => {
-        var rowDate = new Date(row[2]).toISOString();
+        var rawDate = moment(row[2]).format("YYYY-MM-DDTHH:mm:ss");
+        var rowDate = new Date(rawDate).toISOString();
+        @* rowDate = new Date(row[2]).toISOString(); *@
         return (rowDate >= datepickers[0].value || datepickers[0].value == null) && (rowDate <= datepickers[1].value || datepickers[1].value == null);
     });
 

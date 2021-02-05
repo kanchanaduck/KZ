@@ -130,7 +130,7 @@ namespace Ptum.Controllers
                         int rowCount = worksheet.Dimension.Rows;
                         int colCount = worksheet.Dimension.Columns;
                         for (int row = 3; row <= rowCount; row++){
-                            if(worksheet.Cells[row, 4].Value!=null || worksheet.Cells[row, 10].Value.ToString().Trim()!=""){
+                            if(worksheet.Cells[row, 4].Value!=null && worksheet.Cells[row, 10].Value!=null){
                                 _context.Add(new Tb_stock_in
                                 {
                                     prd_code = worksheet.Cells[row, 4].Value.ToString().Trim(),

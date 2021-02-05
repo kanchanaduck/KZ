@@ -11,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using PTum.Data;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Ptum
 {
@@ -28,6 +29,12 @@ namespace Ptum
         {
             services.AddDistributedMemoryCache();
             services.AddAuthentication();
+            // services.AddAuthorization(options =>
+            // {
+            //     options.FallbackPolicy = new AuthorizationPolicyBuilder()
+            //         .RequireAuthenticatedUser()
+            //         .Build();
+            // });
             services.AddSession(options =>
             {
                 options.IdleTimeout = TimeSpan.FromSeconds(100000);
