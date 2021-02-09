@@ -9,7 +9,7 @@ namespace PTum.Models
     public class Tb_mst_product
     {    
         public int Id { get; set; }
-
+        [Required]
         [Display(Name = "Code")]
         public string prd_code { get; set; }
 
@@ -30,10 +30,12 @@ namespace PTum.Models
         [Display(Name = "Model")]
         public string prd_model { get; set; }
 
+        [Display(Name = "CPT Name")]
         public string prd_cpt_name { get; set; }
-
+        [Display(Name = "Fixed Asset No.")]
         public string prd_fixasset_name { get; set; }
 
+        [Display(Name = "Serial No.")]
         public string prd_serial_num { get; set; }
 
         public DateTime? prd_regis_datetime { get; set; }

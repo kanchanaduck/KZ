@@ -15613,6 +15613,11 @@
       "FileKind": "mvc"
     },
     {
+      "FilePath": "c:\\Users\\014496\\Documents\\Visual Studio 2017\\Projects\\PTum\\Views\\StockIn\\Create.cshtml",
+      "TargetPath": "Views\\StockIn\\Create.cshtml",
+      "FileKind": "mvc"
+    },
+    {
       "FilePath": "c:\\Users\\014496\\Documents\\Visual Studio 2017\\Projects\\PTum\\Views\\StockIn\\Index.cshtml",
       "TargetPath": "Views\\StockIn\\Index.cshtml",
       "FileKind": "mvc"

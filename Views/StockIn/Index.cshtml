@@ -136,6 +136,7 @@
     </div>
 </div>
 
+
 <!-- Modal -->
 <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg">
@@ -183,11 +184,21 @@
                 className: "btn-sm",
             },
             {
-                text: '<i class="fas fa-plus"></i> Import stock',
+                text: '<i class="fas fa-plus"></i> New',
+                action: function ( e, dt, node, config ) {
+                    location.href="@Url.Action("Create", "StockIn")"
+                },
+                className: "btn-sm btn-outline-success",
+                init: function(api, node, config) {
+                    $(node).removeClass('btn-secondary')
+                }
+            },
+            {
+                text: '<i class="fas fa-plus"></i> Import',
                 action: function ( e, dt, node, config ) {
                     $('#myModal').modal('show')
                 },
-                className: "btn-sm btn-success",
+                className: "btn-sm btn-outline-success",
                 init: function(api, node, config) {
                     $(node).removeClass('btn-secondary')
                 }
@@ -302,9 +313,7 @@
             });
         }
     })
-</script>
 
-<script type="text/babel">
 
   $("#form-upload").submit(function(e){
     e.preventDefault();
@@ -312,7 +321,7 @@
       console.log(formData)
       $.ajax({
         type: "POST",
-        url: '@Url.Action("Create", "StockIn")',
+        url: '@Url.Action("CreateExcel", "StockIn")',
         dataType: "json",
         async: false,
         cache: false,
@@ -346,36 +355,6 @@
       }
     });
   });
-
-select2_()  
-
-function select2_(){
-
-  $('.product_name_list').select2()
-  $('.product_name_list').select2("destroy")
-  
-  $('.product_name_list').select2({
-    dropdownParent: $('#table-qty tbody tr:last td:first'),
-    theme: 'bootstrap4',
-    placeholder: 'Product code',
-    allowClear: true,
-    ajax: {
-      url: '@Url.Action("All", "Product")',
-      dataType: 'json',
-      processResults: function (data) {
-        return {
-          results: data
-        };
-      }          
-    } 
-  })  
-}
-
-$('#qty-add-row').click(function(){
-  var newrow = $("#table-qty tbody tr:first").clone()
-  $("#table-qty tbody tr:last").after(newrow)
-  select2_()
-})
 
 </script>
 }

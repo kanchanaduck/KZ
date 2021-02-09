@@ -470,3 +470,4 @@ C:\Users\014496\Documents\Visual Studio 2017\Projects\PTum\obj\Debug\net5.0\Razo
 C:\Users\014496\Documents\Visual Studio 2017\Projects\PTum\bin\Debug\net5.0\Microsoft.AspNetCore.JsonPatch.dll
 C:\Users\014496\Documents\Visual Studio 2017\Projects\PTum\bin\Debug\net5.0\Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll
 C:\Users\014496\Documents\Visual Studio 2017\Projects\PTum\bin\Debug\net5.0\Newtonsoft.Json.Bson.dll
+C:\Users\014496\Documents\Visual Studio 2017\Projects\PTum\obj\Debug\net5.0\Razor\Views\StockIn\Create.cshtml.g.cs

@@ -97,12 +97,31 @@ namespace Ptum.Controllers
             return View();
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create(Tb_stock_in tb_stock_in)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.Add(new Tb_stock_in
+                {
+                    prd_code = tb_stock_in.prd_code,
+                    prd_inqty = tb_stock_in.prd_inqty,
+                    in_datetime = DateTime.Now,
+                    in_name = HttpContext.Session.GetString("_Name")?? "014496",
+                });
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            return View();
+        }
+
         // POST: StockIn/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("id_in,prd_code,prd_inqty,in_status,in_datetime,in_name,in_last_uptime,in_last_upname")] Tb_stock_in tb_stock_in, List<IFormFile> files)
+        public async Task<IActionResult> CreateExcel([Bind("id_in,prd_code,prd_inqty,in_status,in_datetime,in_name,in_last_uptime,in_last_upname")] Tb_stock_in tb_stock_in, List<IFormFile> files)
         {
             var time = DateTime.Now.ToString("yyyyMMddHHmmss");
             long size = files.Sum(f => f.Length);

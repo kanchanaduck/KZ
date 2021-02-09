@@ -28,11 +28,12 @@ namespace Ptum.Controllers
         {
             return View(await _context.Tb_mst_product.ToListAsync());
         }
-        public async Task<IActionResult> All()
+        public async Task<IActionResult> Accessories()
         {
             var data = await _context.Tb_mst_product
-                         .Select(e=>new {e.Id, e.prd_code}) 
+                         .Select(e=>new {e.Id, e.prd_code, e.prd_name, e.prd_category}) 
                          .Distinct()
+                         .Where(e=>e.prd_category=="Accessories")
                          .ToListAsync();
             return  Json(data);
         }
@@ -86,12 +87,50 @@ namespace Ptum.Controllers
             return View();
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create([Bind("Id,prd_code,prd_name,prd_img,prd_category,prd_cate_img,prd_type,prd_model,prd_cpt_name,prd_fixasset_name,prd_serial_num,prd_regis_datetime,prd_regis_name,prd_last_uptime,prd_last_upname,prd_status")] Tb_mst_product tb_mst_product, [FromForm] Boolean insert_qty)
+        {
+            // return Ok(new{tb_mst_product, insert_qty});
+            if (ModelState.IsValid)
+            {
+                var query = _context.Add(new Tb_mst_product
+                {
+                    prd_category = tb_mst_product.prd_category,
+                    prd_code = tb_mst_product.prd_code.Trim(),
+                    prd_name = tb_mst_product.prd_name,
+                    prd_type = tb_mst_product.prd_type,
+                    prd_model = tb_mst_product.prd_model,
+                    prd_cpt_name = tb_mst_product.prd_cpt_name,
+                    prd_fixasset_name = tb_mst_product.prd_fixasset_name,
+                    prd_serial_num = tb_mst_product.prd_serial_num,
+                    prd_regis_datetime = DateTime.Now,
+                    prd_regis_name = HttpContext.Session.GetString("_Name")?? "014496"
+                });
+                await _context.SaveChangesAsync();
+
+                if(insert_qty){
+                    _context.Add(new Tb_stock_in
+                    {
+                        prd_code = tb_mst_product.prd_code,
+                        prd_inqty = 1,
+                        in_datetime = DateTime.Now,
+                        in_name = HttpContext.Session.GetString("_Name") ?? "014496"
+                    });
+                    await _context.SaveChangesAsync();
+                }
+
+                return RedirectToAction(nameof(Index));
+            }
+            return View(tb_mst_product);
+        }
+
         // POST: Product/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,prd_code,prd_name,prd_img,prd_category,prd_cate_img,prd_type,prd_model,prd_cpt_name,prd_fixasset_name,prd_serial_num,prd_regis_datetime,prd_regis_name,prd_last_uptime,prd_last_upname,prd_status")] Tb_mst_product tb_mst_product, List<IFormFile> files)
+        public async Task<IActionResult> CreateExcel([Bind("Id,prd_code,prd_name,prd_img,prd_category,prd_cate_img,prd_type,prd_model,prd_cpt_name,prd_fixasset_name,prd_serial_num,prd_regis_datetime,prd_regis_name,prd_last_uptime,prd_last_upname,prd_status")] Tb_mst_product tb_mst_product, List<IFormFile> files)
         {
             var time = DateTime.Now.ToString("yyyyMMddHHmmss");
             long size = files.Sum(f => f.Length);
@@ -134,6 +173,19 @@ namespace Ptum.Controllers
                                     prd_regis_name = HttpContext.Session.GetString("_Name")
                                 });
                                 await _context.SaveChangesAsync();
+                            }
+                            if(worksheet.Cells[row, 10].Value!=null){
+                                if(worksheet.Cells[row, 10].Value.ToString()=="Y" || worksheet.Cells[row, 10].Value.ToString()=="y")
+                                {
+                                    _context.Add(new Tb_stock_in
+                                    {
+                                        prd_code = worksheet.Cells[row, 4].Value.ToString().Trim(),
+                                        prd_inqty = 1,
+                                        in_datetime = DateTime.Now,
+                                        in_name = HttpContext.Session.GetString("_Name"),
+                                    });
+                                    await _context.SaveChangesAsync();
+                                }
                             }
                         }
                     }

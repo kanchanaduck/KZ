@@ -1,9 +1,10 @@
 @model PTum.Models.Tb_mst_product
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Create product";
 }
 
+<div class="col-4 offset-md-4">
 <div class="card card-info">
     <div class="card-header">
         <h3 class="card-title">Product detail</h3>
@@ -22,19 +23,9 @@
                 <span asp-validation-for="prd_name" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="prd_img" class="control-label"></label>
-                <input asp-for="prd_img" class="form-control" />
-                <span asp-validation-for="prd_img" class="text-danger"></span>
-            </div>
-            <div class="form-group">
                 <label asp-for="prd_category" class="control-label"></label>
                 <input asp-for="prd_category" class="form-control" />
                 <span asp-validation-for="prd_category" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="prd_cate_img" class="control-label"></label>
-                <input asp-for="prd_cate_img" class="form-control" />
-                <span asp-validation-for="prd_cate_img" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="prd_type" class="control-label"></label>
@@ -61,44 +52,21 @@
                 <input asp-for="prd_serial_num" class="form-control" />
                 <span asp-validation-for="prd_serial_num" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="prd_regis_datetime" class="control-label"></label>
-                <input asp-for="prd_regis_datetime" class="form-control" />
-                <span asp-validation-for="prd_regis_datetime" class="text-danger"></span>
+            <div class="form-check">
+                <input type="checkbox" class="form-check-input" name="insert_qty" id="insert_qty" value="true">
+                <label class="form-check-label" for="insert_qty">Insert 1 qty</label>
             </div>
-            <div class="form-group">
-                <label asp-for="prd_regis_name" class="control-label"></label>
-                <input asp-for="prd_regis_name" class="form-control" />
-                <span asp-validation-for="prd_regis_name" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="prd_last_uptime" class="control-label"></label>
-                <input asp-for="prd_last_uptime" class="form-control" />
-                <span asp-validation-for="prd_last_uptime" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="prd_last_upname" class="control-label"></label>
-                <input asp-for="prd_last_upname" class="form-control" />
-                <span asp-validation-for="prd_last_upname" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="prd_status" class="control-label"></label>
-                <input asp-for="prd_status" class="form-control" />
-                <span asp-validation-for="prd_status" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+            <div class="form-group text-right">
+                <button type="submit" class="btn btn-success">Create</button>
+                <a class="btn btn-outline-secondary" href='@Url.Action("Index", "Product")'>Back</a>
             </div>
         </form>
     </div>
 </div>
 </div>
 </div>
-
-
-<div>
-    <a asp-action="Index">Back to List</a>
 </div>
+
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

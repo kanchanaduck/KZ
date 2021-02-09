@@ -67,13 +67,9 @@
 
 <div class="card">
 <div class="card-body">
-
 <table class="table table-sm table-bordered" id="product-tb">
     <thead>
         <tr>
-            @* <th class="text-center">
-                <input type="checkbox">
-            </th> *@
             <th class="text-center">
                 @Html.DisplayNameFor(model => model.prd_code)
             </th>
@@ -185,7 +181,7 @@
 <script type="text/babel">
    
 
-    $("#product-tb").DataTable({
+    var table = $("#product-tb").DataTable({
         "responsive": true, 
         "lengthChange": false, 
         "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]], 
@@ -196,11 +192,21 @@
                 className: "btn-sm",
             },
             {
-                text: '<i class="fas fa-plus"></i> Import product',
+                text: '<i class="fas fa-plus"></i> New',
+                action: function ( e, dt, node, config ) {
+                    location.href="@Url.Action("Create", "Product")"
+                },
+                className: "btn-sm btn-outline-success",
+                init: function(api, node, config) {
+                    $(node).removeClass('btn-secondary')
+                }
+            },
+            {
+                text: '<i class="fas fa-plus"></i> Import',
                 action: function ( e, dt, node, config ) {
                     $('#myModal').modal('show')
                 },
-                className: "btn-sm btn-success",
+                className: "btn-sm btn-outline-success",
                 init: function(api, node, config) {
                     $(node).removeClass('btn-secondary')
                 }
@@ -224,7 +230,9 @@
                 }
             },
         ]
-    }).buttons().container().appendTo('#product-tb_wrapper .col-md-6:eq(0)')
+    })
+    
+    table.buttons().container().appendTo('#product-tb_wrapper .col-md-6:eq(0)')
 
 
     $('#file-upload').change(function(){
@@ -257,7 +265,7 @@
         console.log(formData)
         $.ajax({
           type: "POST",
-          url: '@Url.Action("Create", "Product")',
+          url: '@Url.Action("CreateExcel", "Product")',
           dataType: "json",
           async: false,
           cache: false,

@@ -1,0 +1,57 @@
+@model PTum.Models.Tb_stock_in
+@using Microsoft.Extensions.Configuration
+@inject IConfiguration Configuration
+
+@{
+    ViewData["Title"] = "Stock in";
+}
+
+<div class="col-4 offset-4">
+  <form asp-action="Create">
+    <div class="card card-outline card-success">
+      <div class="card-header">
+          <h3 class="card-title">Add stock</h3>
+      </div>
+      <div class="card-body">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="form-group">
+            <label asp-for="prd_code" class="control-label"></label>
+            <select asp-for="prd_code" class="form-control">
+            </select>
+            <span asp-validation-for="prd_code" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="prd_inqty" class="control-label"></label>
+            <input asp-for="prd_inqty" class="form-control" />
+            <span asp-validation-for="prd_inqty" class="text-danger"></span>
+        </div>
+        <div class="form-group text-right">
+          <button type="submit" class="btn btn-success">Submit</button>
+          <a class="btn btn-outline-secondary" href='@Url.Action("Index", "StockIn")'>Back</a>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+
+@section scripts{
+<script type="text/babel">
+    $('#prd_code').select2({
+      theme: 'bootstrap4',
+      placeholder: 'Product code',
+      allowClear: true,
+      ajax: {
+        url: '@Url.Action("Accessories", "Product")',
+        dataType: 'json',
+        processResults: function (data) {
+          var option = $.map(data, function (obj) {
+            obj.id = obj.prd_code ;
+            obj.text = obj.prd_code + " - " + obj.prd_name; 
+            return obj;
+          });
+          return {results: option};
+        }          
+      } 
+    }) 
+  </script> 
+}
