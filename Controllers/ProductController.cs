@@ -27,6 +27,7 @@ namespace Ptum.Controllers
         public async Task<IActionResult> Index()
         {
             return View(await _context.Tb_mst_product.ToListAsync());
+            // return Ok(await _context.Tb_mst_product.ToListAsync());
         }
         public async Task<IActionResult> Accessories()
         {

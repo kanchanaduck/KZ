@@ -39,6 +39,21 @@
                     <input asp-for="prd_model" class="form-control" />
                     <span asp-validation-for="prd_model" class="text-danger"></span>
                 </div>
+                <div class="form-group">
+                    <label asp-for="prd_cpt_name" class="control-label"></label>
+                    <input asp-for="prd_cpt_name" class="form-control" />
+                    <span asp-validation-for="prd_cpt_name" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="prd_fixasset_name" class="control-label"></label>
+                    <input asp-for="prd_fixasset_name" class="form-control" />
+                    <span asp-validation-for="prd_fixasset_name" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="prd_serial_num" class="control-label"></label>
+                    <input asp-for="prd_serial_num" class="form-control" />
+                    <span asp-validation-for="prd_serial_num" class="text-danger"></span>
+                </div>
                 <div class="form-group text-right">
                     <input type="submit" value="Save" class="btn btn-primary" />
                     <input type="button" value="Reset" class="btn btn-outline-secondary" onclick="location.reload()"/>

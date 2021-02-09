@@ -15,13 +15,13 @@ namespace PTum.Models
 
         [Display(Name = "Name")]
         public string prd_name { get; set; }
-        [NotMapped]
         [Display(Name = "Image")]
+        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public string prd_img { get; set; }
 
         [Display(Name = "Category")]
         public string prd_category { get; set; }
-        [NotMapped]
+        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
 
         [Display(Name = "Category Image")]      
         public string prd_cate_img { get; set; }
