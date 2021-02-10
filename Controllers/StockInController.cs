@@ -170,17 +170,18 @@ namespace Ptum.Controllers
         // GET: StockIn/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            // if (id == null)
+            // {
+            //     return NotFound();
+            // }
 
-            var tb_stock_in = await _context.Tb_stock_in.FindAsync(id);
-            if (tb_stock_in == null)
-            {
-                return NotFound();
-            }
-            return View(tb_stock_in);
+            // var tb_stock_in = await _context.Tb_stock_in.FindAsync(id);
+            // if (tb_stock_in == null)
+            // {
+            //     return NotFound();
+            // }
+            // return View(tb_stock_in);
+            return NotFound();
         }
 
         // POST: StockIn/Edit/5
