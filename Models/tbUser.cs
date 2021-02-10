@@ -8,8 +8,11 @@ namespace PTum.Models
     {
         [Key]        
         public int id { get; set; }
+        [Required]
+        [StringLength(6, MinimumLength = 6)]
         [Display(Name = "Username")]
         public string username { get; set; }
+        [Required]
         [Display(Name = "Password")]
         public string password { get; set; }
         public string email { get; set; }
