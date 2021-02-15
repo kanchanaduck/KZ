@@ -12,6 +12,8 @@ using Microsoft.Extensions.Hosting;
 using PTum.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Http;
 
 namespace Ptum
 {
@@ -60,7 +62,7 @@ namespace Ptum
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILogger<Startup> logger)
         {
             if (env.IsDevelopment())
             {
@@ -88,6 +90,34 @@ namespace Ptum
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
+
+            // app.Use(async (context, next) =>
+            // {
+            //     // Do work that doesn't write to the Response.
+            //     await next.Invoke();
+            //     // Do logging or other work that doesn't write to the Response.
+            // });
+
+            // app.Use(async (context, next) =>
+            // {
+            //     logger.LogInformation($"Before setting: Verified: {context.Items["isVerified"]}");
+            //     context.Items["isVerified"] = true;
+            //     await next.Invoke();
+            // });
+
+            // app.Use(async (context, next) =>
+            // {
+            //     logger.LogInformation($"Next: Verified: {context.Items["isVerified"]}");
+            //     await next.Invoke();
+            // });
+
+            // app.UseEndpoints(endpoints =>
+            // {
+            //     endpoints.MapGet("/", async context =>
+            //     {
+            //         await context.Response.WriteAsync($"Verified: {context.Items["isVerified"]}");
+            //     });
+            // });
         }
         
     }

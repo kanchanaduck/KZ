@@ -109,7 +109,7 @@ namespace Ptum.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("id,username,password,email,tell,det,div,det_code,div_code,name,last_name,full_name,emp_code,position,project_id,status")] tbUser tbUser)
+        public async Task<IActionResult> Edit(int id, [Bind("id,username,password,email,tell,det,div,det_code,div_code,name,last_name,full_name,emp_code,position,status")] tbUser tbUser)
         {
             if (id != tbUser.id)
             {
@@ -120,6 +120,7 @@ namespace Ptum.Controllers
             {
                 try
                 {
+                    tbUser.project_id = Int16.Parse(_config["MyProject:id"]);
                     _context.Update(tbUser);
                     await _context.SaveChangesAsync();
                 }
