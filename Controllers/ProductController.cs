@@ -150,43 +150,42 @@ namespace Ptum.Controllers
                 }
             }
 
-            if (ModelState.IsValid){
-                if(System.IO.File.Exists(filePath)){
-                    Console.WriteLine("File exists.");
-                    using(var package = new ExcelPackage(new FileInfo(filePath)))
-                    {
-                        ExcelWorksheet worksheet = package.Workbook.Worksheets[0];
-                        int rowCount = worksheet.Dimension.Rows;
-                        int colCount = worksheet.Dimension.Columns;
-                        for (int row = 4; row <= rowCount; row++){
-                            if(worksheet.Cells[row, 2].Value!=null){
-                                var query =_context.Add(new Tb_mst_product
+            if(System.IO.File.Exists(filePath)){
+                Console.WriteLine("File exists.");
+                using(var package = new ExcelPackage(new FileInfo(filePath)))
+                {
+                    ExcelWorksheet worksheet = package.Workbook.Worksheets[0];
+                    int rowCount = worksheet.Dimension.Rows;
+                    int colCount = worksheet.Dimension.Columns;
+                    for (int row = 4; row <= rowCount; row++){
+                        if(worksheet.Cells[row, 3].Value!=null){
+                            var query =_context.Add(new Tb_mst_product
+                            {
+                                prd_category = worksheet.Cells[row, 2].Value==null? null:worksheet.Cells[row, 2].Value.ToString().Trim(),
+                                prd_code = worksheet.Cells[row, 3].Value==null? null:worksheet.Cells[row, 3].Value.ToString().Trim(),
+                                prd_name = worksheet.Cells[row, 4].Value==null? null:worksheet.Cells[row, 4].Value.ToString().Trim(),
+                                prd_type = worksheet.Cells[row, 5].Value==null? null:worksheet.Cells[row, 5].Value.ToString().Trim(),
+                                prd_model = worksheet.Cells[row, 6].Value==null? null:worksheet.Cells[row, 6].Value.ToString().Trim(),
+                                prd_cpt_name = worksheet.Cells[row, 7].Value==null? null:worksheet.Cells[row, 7].Value.ToString().Trim(),
+                                prd_fixasset_name = worksheet.Cells[row, 8].Value==null? null:worksheet.Cells[row, 8].Value.ToString().Trim(),
+                                prd_serial_num = worksheet.Cells[row, 9].Value==null? null:worksheet.Cells[row, 9].Value.ToString().Trim(),
+                                prd_regis_datetime = DateTime.Now,
+                                prd_regis_name = HttpContext.Session.GetString("_Name")
+                            });
+                            Console.WriteLine(query);
+                            await _context.SaveChangesAsync();
+                        }
+                        if(worksheet.Cells[row, 10].Value!=null){
+                            if(worksheet.Cells[row, 10].Value.ToString()=="Y" || worksheet.Cells[row, 10].Value.ToString()=="y")
+                            {
+                                _context.Add(new Tb_stock_in
                                 {
-                                    prd_category = worksheet.Cells[row, 2].Value==null? null:worksheet.Cells[row, 2].Value.ToString().Trim(),
-                                    prd_code = worksheet.Cells[row, 3].Value==null? null:worksheet.Cells[row, 3].Value.ToString().Trim(),
-                                    prd_name = worksheet.Cells[row, 4].Value==null? null:worksheet.Cells[row, 4].Value.ToString().Trim(),
-                                    prd_type = worksheet.Cells[row, 5].Value==null? null:worksheet.Cells[row, 5].Value.ToString().Trim(),
-                                    prd_model = worksheet.Cells[row, 6].Value==null? null:worksheet.Cells[row, 6].Value.ToString().Trim(),
-                                    prd_cpt_name = worksheet.Cells[row, 7].Value==null? null:worksheet.Cells[row, 7].Value.ToString().Trim(),
-                                    prd_fixasset_name = worksheet.Cells[row, 8].Value==null? null:worksheet.Cells[row, 8].Value.ToString().Trim(),
-                                    prd_serial_num = worksheet.Cells[row, 9].Value==null? null:worksheet.Cells[row, 9].Value.ToString().Trim(),
-                                    prd_regis_datetime = DateTime.Now,
-                                    prd_regis_name = HttpContext.Session.GetString("_Name")
+                                    prd_code = worksheet.Cells[row, 4].Value.ToString().Trim(),
+                                    prd_inqty = 1,
+                                    in_datetime = DateTime.Now,
+                                    in_name = HttpContext.Session.GetString("_Name"),
                                 });
                                 await _context.SaveChangesAsync();
-                            }
-                            if(worksheet.Cells[row, 10].Value!=null){
-                                if(worksheet.Cells[row, 10].Value.ToString()=="Y" || worksheet.Cells[row, 10].Value.ToString()=="y")
-                                {
-                                    _context.Add(new Tb_stock_in
-                                    {
-                                        prd_code = worksheet.Cells[row, 4].Value.ToString().Trim(),
-                                        prd_inqty = 1,
-                                        in_datetime = DateTime.Now,
-                                        in_name = HttpContext.Session.GetString("_Name"),
-                                    });
-                                    await _context.SaveChangesAsync();
-                                }
                             }
                         }
                     }

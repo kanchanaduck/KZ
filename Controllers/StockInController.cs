@@ -140,49 +140,47 @@ namespace Ptum.Controllers
                 }
             }
 
-            if (ModelState.IsValid){
-                if(System.IO.File.Exists(filePath)){
-                    Console.WriteLine("File exists.");
-                    using(var package = new ExcelPackage(new FileInfo(filePath)))
-                    {
-                        ExcelWorksheet worksheet = package.Workbook.Worksheets[0];
-                        int rowCount = worksheet.Dimension.Rows;
-                        int colCount = worksheet.Dimension.Columns;
-                        for (int row = 3; row <= rowCount; row++){
-                            if(worksheet.Cells[row, 4].Value!=null && worksheet.Cells[row, 10].Value!=null){
-                                _context.Add(new Tb_stock_in
-                                {
-                                    prd_code = worksheet.Cells[row, 4].Value.ToString().Trim(),
-                                    prd_inqty = int.Parse(worksheet.Cells[row, 10].Value.ToString().Trim()),
-                                    in_datetime = DateTime.Now,
-                                    in_name = HttpContext.Session.GetString("_Name"),
-                                });
-                                await _context.SaveChangesAsync();
-                            }
+            if(System.IO.File.Exists(filePath)){
+                Console.WriteLine("File exists.");
+                using(var package = new ExcelPackage(new FileInfo(filePath)))
+                {
+                    ExcelWorksheet worksheet = package.Workbook.Worksheets[0];
+                    int rowCount = worksheet.Dimension.Rows;
+                    int colCount = worksheet.Dimension.Columns;
+                    for (int row = 3; row <= rowCount; row++){
+                        if(worksheet.Cells[row, 4].Value!=null && worksheet.Cells[row, 10].Value!=null){
+                            _context.Add(new Tb_stock_in
+                            {
+                                prd_code = worksheet.Cells[row, 4].Value.ToString().Trim(),
+                                prd_inqty = int.Parse(worksheet.Cells[row, 10].Value.ToString().Trim()),
+                                in_datetime = DateTime.Now,
+                                in_name = HttpContext.Session.GetString("_Name"),
+                            });
+                            await _context.SaveChangesAsync();
                         }
                     }
                 }
             }
 
+
             return Ok(new { success= true, count = files.Count, size });
         }
 
         // GET: StockIn/Edit/5
-        public async Task<IActionResult> Edit(int? id)
-        {
-            // if (id == null)
-            // {
-            //     return NotFound();
-            // }
+        // public async Task<IActionResult> Edit(int? id)
+        // {
+        //     // if (id == null)
+        //     // {
+        //     //     return NotFound();
+        //     // }
 
-            // var tb_stock_in = await _context.Tb_stock_in.FindAsync(id);
-            // if (tb_stock_in == null)
-            // {
-            //     return NotFound();
-            // }
-            // return View(tb_stock_in);
-            return NotFound();
-        }
+        //     // var tb_stock_in = await _context.Tb_stock_in.FindAsync(id);
+        //     // if (tb_stock_in == null)
+        //     // {
+        //     //     return NotFound();
+        //     // }
+        //     // return View(tb_stock_in);
+        // }
 
         // POST: StockIn/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
