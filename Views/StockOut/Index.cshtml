@@ -14,19 +14,6 @@ tr.group, tr.group:hover {
 <div class="card">
     <div class="card-body">
         <div class="row">
-            @* <div class="col-md-3 col-sm-6">
-                <div class="form-group">
-                    <label>Date range:</label>
-                    <div class="input-group">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text">
-                                <i class="far fa-calendar-alt"></i>
-                            </span>
-                        </div>
-                        <input type="text" class="form-control float-right" id="reservation">
-                    </div><!-- /.input group -->
-                </div>  
-            </div> *@
             <div class="col-md-3 col-sm-6">
             <!-- Date and time range -->
                 <div class="form-group">
@@ -67,7 +54,7 @@ tr.group, tr.group:hover {
                 @Html.DisplayNameFor(model => model.prd_borrow_status)
             </th>
             <th class="text-center">
-                @Html.DisplayNameFor(model => model.out_datetime)
+                @Html.DisplayNameFor(model => model.send_datetime)
             </th>
             <th class="text-center">
                 @Html.DisplayNameFor(model => model.out_name)
@@ -119,8 +106,8 @@ tr.group, tr.group:hover {
                 }
             </td>
             <td>
-                @* @Html.DisplayFor(modelItem => item.out_datetime) *@
-                @Convert.ToDateTime(item.out_datetime).ToString("yyyy-MM-dd HH:mm:ss")
+                @* @Html.DisplayFor(modelItem => item.send_datetime) *@
+                @Convert.ToDateTime(item.send_datetime).ToString("yyyy-MM-dd HH:mm:ss")
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.out_name)
@@ -144,7 +131,7 @@ tr.group, tr.group:hover {
         "columnDefs": [
             { "visible": false, "targets": groupColumn }
         ],
-        "order": [[ groupColumn, 'desc' ]],
+        "order": [[ 6, 'desc' ]],
         "drawCallback": function ( settings ) {
             var api = this.api();
             var rows = api.rows( {page:'current'} ).nodes();
@@ -241,7 +228,7 @@ tr.group, tr.group:hover {
           'This Month'  : [moment().startOf('month'), moment().endOf('month')],
           'Last Month'  : [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
         },
-        startDate: moment().subtract(29, 'days'),
+        startDate: minDate,
         endDate  : moment()
       },
       function (start, end) {

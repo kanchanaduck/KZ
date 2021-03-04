@@ -31,12 +31,7 @@ namespace Ptum
         {
             services.AddDistributedMemoryCache();
             services.AddAuthentication();
-            // services.AddAuthorization(options =>
-            // {
-            //     options.FallbackPolicy = new AuthorizationPolicyBuilder()
-            //         .RequireAuthenticatedUser()
-            //         .Build();
-            // });
+
             services.AddSession(options =>
             {
                 options.IdleTimeout = TimeSpan.FromSeconds(100000);
@@ -91,34 +86,18 @@ namespace Ptum
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
 
-            // app.Use(async (context, next) =>
-            // {
-            //     // Do work that doesn't write to the Response.
-            //     await next.Invoke();
-            //     // Do logging or other work that doesn't write to the Response.
-            // });
+            app.Use(async (context, next) =>
+            {
+                // Do work that doesn't write to the Response.
+                await next.Invoke();
+                // Do logging or other work that doesn't write to the Response.
+            });
 
-            // app.Use(async (context, next) =>
-            // {
-            //     logger.LogInformation($"Before setting: Verified: {context.Items["isVerified"]}");
-            //     context.Items["isVerified"] = true;
-            //     await next.Invoke();
-            // });
+            app.Run(async context =>
+            {
+                await context.Response.WriteAsync("Hello from 2nd delegate.");
+            });
 
-            // app.Use(async (context, next) =>
-            // {
-            //     logger.LogInformation($"Next: Verified: {context.Items["isVerified"]}");
-            //     await next.Invoke();
-            // });
-
-            // app.UseEndpoints(endpoints =>
-            // {
-            //     endpoints.MapGet("/", async context =>
-            //     {
-            //         await context.Response.WriteAsync($"Verified: {context.Items["isVerified"]}");
-            //     });
-            // });
         }
-        
     }
 }
