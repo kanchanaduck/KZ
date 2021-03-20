@@ -1,8 +1,10 @@
+using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Microsoft.AspNetCore.Http;
+
 
 namespace PTum.Models
 {
@@ -11,6 +13,7 @@ namespace PTum.Models
         public int Id { get; set; }
         [Required]
         [Display(Name = "Code")]
+        // [Index("prd_code_tb_mst_product", IsUnique = true)]
         public string prd_code { get; set; }
 
         [Display(Name = "Name")]

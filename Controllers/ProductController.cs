@@ -108,9 +108,9 @@ namespace Ptum.Controllers
                     prd_regis_datetime = DateTime.Now,
                     prd_regis_name = HttpContext.Session.GetString("_Name")?? "014496"
                 });
-                await _context.SaveChangesAsync();
+                var insert_mst_prod_success = await _context.SaveChangesAsync() > 0;
 
-                if(insert_qty){
+                if(insert_mst_prod_success && insert_qty){
                     _context.Add(new Tb_stock_in
                     {
                         prd_code = tb_mst_product.prd_code,
@@ -157,41 +157,53 @@ namespace Ptum.Controllers
                     ExcelWorksheet worksheet = package.Workbook.Worksheets[0];
                     int rowCount = worksheet.Dimension.Rows;
                     int colCount = worksheet.Dimension.Columns;
-                    for (int row = 4; row <= rowCount; row++){
-                        if(worksheet.Cells[row, 3].Value!=null){
-                            var query =_context.Add(new Tb_mst_product
-                            {
-                                prd_category = worksheet.Cells[row, 2].Value==null? null:worksheet.Cells[row, 2].Value.ToString().Trim(),
-                                prd_code = worksheet.Cells[row, 3].Value==null? null:worksheet.Cells[row, 3].Value.ToString().Trim(),
-                                prd_name = worksheet.Cells[row, 4].Value==null? null:worksheet.Cells[row, 4].Value.ToString().Trim(),
-                                prd_type = worksheet.Cells[row, 5].Value==null? null:worksheet.Cells[row, 5].Value.ToString().Trim(),
-                                prd_model = worksheet.Cells[row, 6].Value==null? null:worksheet.Cells[row, 6].Value.ToString().Trim(),
-                                prd_cpt_name = worksheet.Cells[row, 7].Value==null? null:worksheet.Cells[row, 7].Value.ToString().Trim(),
-                                prd_fixasset_name = worksheet.Cells[row, 8].Value==null? null:worksheet.Cells[row, 8].Value.ToString().Trim(),
-                                prd_serial_num = worksheet.Cells[row, 9].Value==null? null:worksheet.Cells[row, 9].Value.ToString().Trim(),
-                                prd_regis_datetime = DateTime.Now,
-                                prd_regis_name = HttpContext.Session.GetString("_Name")
-                            });
-                            Console.WriteLine(query);
-                            await _context.SaveChangesAsync();
-                        }
-                        if(worksheet.Cells[row, 10].Value!=null){
-                            if(worksheet.Cells[row, 10].Value.ToString()=="Y" || worksheet.Cells[row, 10].Value.ToString()=="y")
-                            {
-                                _context.Add(new Tb_stock_in
+                    using var transaction = _context.Database.BeginTransaction();
+                    try
+                    {
+                        for (int row = 4; row <= rowCount; row++){
+                            var insert_mst_prod_success = false;
+                            if(worksheet.Cells[row, 3].Value!=null){
+                                _context.Add(new Tb_mst_product
                                 {
-                                    prd_code = worksheet.Cells[row, 4].Value.ToString().Trim(),
-                                    prd_inqty = 1,
-                                    in_datetime = DateTime.Now,
-                                    in_name = HttpContext.Session.GetString("_Name"),
+                                    prd_category = worksheet.Cells[row, 2].Value==null? null:worksheet.Cells[row, 2].Value.ToString().Trim(),
+                                    prd_code = worksheet.Cells[row, 3].Value==null? null:worksheet.Cells[row, 3].Value.ToString().Trim(),
+                                    prd_name = worksheet.Cells[row, 4].Value==null? null:worksheet.Cells[row, 4].Value.ToString().Trim(),
+                                    prd_type = worksheet.Cells[row, 5].Value==null? null:worksheet.Cells[row, 5].Value.ToString().Trim(),
+                                    prd_model = worksheet.Cells[row, 6].Value==null? null:worksheet.Cells[row, 6].Value.ToString().Trim(),
+                                    prd_cpt_name = worksheet.Cells[row, 7].Value==null? null:worksheet.Cells[row, 7].Value.ToString().Trim(),
+                                    prd_fixasset_name = worksheet.Cells[row, 8].Value==null? null:worksheet.Cells[row, 8].Value.ToString().Trim(),
+                                    prd_serial_num = worksheet.Cells[row, 9].Value==null? null:worksheet.Cells[row, 9].Value.ToString().Trim(),
+                                    prd_regis_datetime = DateTime.Now,
+                                    prd_regis_name = HttpContext.Session.GetString("_Name")
                                 });
-                                await _context.SaveChangesAsync();
+                                insert_mst_prod_success = await _context.SaveChangesAsync() > 0;
+                                Console.WriteLine(row+" "+insert_mst_prod_success);
+                    
+                            }
+                            if(insert_mst_prod_success && worksheet.Cells[row, 10].Value!=null){
+                                if(worksheet.Cells[row, 10].Value.ToString()=="Y" || worksheet.Cells[row, 10].Value.ToString()=="y")
+                                {
+                                    _context.Add(new Tb_stock_in
+                                    {
+                                        prd_code = worksheet.Cells[row, 3].Value.ToString().Trim(),
+                                        prd_inqty = 1,
+                                        in_datetime = DateTime.Now,
+                                        in_name = HttpContext.Session.GetString("_Name"),
+                                    });
+                                    await _context.SaveChangesAsync();
+                                }
                             }
                         }
+                        transaction.Commit();
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex);
+                        throw;
                     }
                 }
             }
-
+            
             return Ok(new { success=true, count = files.Count, size });
             // return RedirectToAction(nameof(Index)); 
         }
