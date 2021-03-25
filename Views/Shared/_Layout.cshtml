@@ -203,7 +203,6 @@
       toast: true,
       position: 'top',
       showConfirmButton: false,
-      timer: 4000,
       timerProgressBar: true,
     });
 </script>
@@ -246,16 +245,13 @@
           //debugger;
           console.log(result);
           if (result.success) {
-            @* Toast.fire({
-              icon: 'warning',
-              title: 'ล็อกอินยังไม่ได้ รอพี่ต่๋ำมาทำ'
-            }) *@
             location.reload()
           }
           else {
             Toast.fire({
               icon: 'error',
-              title: 'Login failed, please try again'
+              title: 'Login failed, please try again',
+              timer: 4000,
             })
           }
         }
