@@ -41,8 +41,10 @@ namespace PTum.Models
         [Display(Name = "Serial No.")]
         public string prd_serial_num { get; set; }
 
+        [Display(Name = "Register Date")]
         public DateTime? prd_regis_datetime { get; set; }
 
+        [Display(Name = "Creator")]
         public string prd_regis_name { get; set; }
 
         public DateTime? prd_last_uptime { get; set; }

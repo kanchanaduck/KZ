@@ -20,7 +20,7 @@ namespace PTum.Models
 
         [Display(Name = "Date in")]
         public DateTime? in_datetime { get; set; }
-        [Display(Name = "Operator")]
+        [Display(Name = "Creator")]
         public string in_name { get; set; }
         public string in_last_uptime { get; set; }
         public string in_last_upname { get; set; }
