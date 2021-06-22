@@ -26,6 +26,9 @@ namespace Ptum.Controllers
         // GET: Product
         public async Task<IActionResult> Index()
         {
+            if(IsNotLogin()){
+                return Unauthorized();
+            }
             return View(await _context.Tb_mst_product.ToListAsync());
             // return Ok(await _context.Tb_mst_product.ToListAsync());
         }
@@ -291,6 +294,10 @@ namespace Ptum.Controllers
         private bool Tb_mst_productExists(int id)
         {
             return _context.Tb_mst_product.Any(e => e.Id == id);
+        }
+        private bool IsNotLogin()
+        {
+            return String.IsNullOrEmpty(HttpContext.Session.GetString("_Name"));
         }
     }
 }

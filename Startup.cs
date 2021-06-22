@@ -85,6 +85,14 @@ namespace Ptum
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
+            
+            app.UseStatusCodePages(async context =>
+            {
+                if (context.HttpContext.Response.StatusCode == 401)
+                {
+                    await context.HttpContext.Response.WriteAsync("Custom Unauthorized request");
+                }
+            });
 
             app.Use(async (context, next) =>
             {

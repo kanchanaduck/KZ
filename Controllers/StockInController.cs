@@ -31,6 +31,9 @@ namespace Ptum.Controllers
         // GET: StockIn
         public async Task<IActionResult> Index()
         {
+            if(IsNotLogin()){
+                return Unauthorized();
+            }
             return View(await _context.Tb_stock_in.ToListAsync());
         }
 
@@ -249,6 +252,10 @@ namespace Ptum.Controllers
         private bool Tb_stock_inExists(int id)
         {
             return _context.Tb_stock_in.Any(e => e.id_in == id);
+        }
+        private bool IsNotLogin()
+        {
+            return String.IsNullOrEmpty(HttpContext.Session.GetString("_Name"));
         }
     }
 }

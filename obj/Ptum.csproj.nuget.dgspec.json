@@ -47,6 +47,10 @@
               "target": "Package",
               "version": "[5.4.2, )"
             },
+            "Faker.Net": {
+              "target": "Package",
+              "version": "[1.5.138, )"
+            },
             "Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore": {
               "target": "Package",
               "version": "[5.0.0, )"
