@@ -9384,9 +9384,9 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\014496\\Documents\\Visual Studio 2017\\Projects\\PTum\\Ptum.csproj",
-      "projectName": "Ptum",
-      "projectPath": "C:\\Users\\014496\\Documents\\Visual Studio 2017\\Projects\\PTum\\Ptum.csproj",
+      "projectUniqueName": "C:\\Users\\014496\\Documents\\Visual Studio 2017\\Projects\\PTum\\PTum.csproj",
+      "projectName": "PTum",
+      "projectPath": "C:\\Users\\014496\\Documents\\Visual Studio 2017\\Projects\\PTum\\PTum.csproj",
       "packagesPath": "C:\\Users\\014496\\.nuget\\packages\\",
       "outputPath": "C:\\Users\\014496\\Documents\\Visual Studio 2017\\Projects\\PTum\\obj\\",
       "projectStyle": "PackageReference",

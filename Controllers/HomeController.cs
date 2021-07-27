@@ -7,9 +7,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using PTum.Data;
-using Ptum.Models;
+using PTum.Models;
 
-namespace Ptum.Controllers
+namespace PTum.Controllers
 {
     public class HomeController : Controller
     {

@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "sgWc/CDg6+TUj3kj+ZgrhUjI3+Eu+04KSupAQCvVwzGn6V+tKjmxmmd0y6JX+Ih/hDB2SDwuMkeZKUA+KcXnWQ==",
+  "dgSpecHash": "xgJT1SiFdDTpbm5RvhCoWbXINpz6+xYS4R4iivsCdVjhjTVc94ez8wNsIkgrR3ofzzT1bY/jyXMSa4e05LLImQ==",
   "success": true,
-  "projectFilePath": "C:\\Users\\014496\\Documents\\Visual Studio 2017\\Projects\\PTum\\Ptum.csproj",
+  "projectFilePath": "C:\\Users\\014496\\Documents\\Visual Studio 2017\\Projects\\PTum\\PTum.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\014496\\.nuget\\packages\\epplus\\5.4.2\\epplus.5.4.2.nupkg.sha512",
     "C:\\Users\\014496\\.nuget\\packages\\faker.net\\1.5.138\\faker.net.1.5.138.nupkg.sha512",

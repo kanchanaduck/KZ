@@ -224,40 +224,48 @@
         return { username: username, password: password }
       }
     }).then(function(result) {
-      $.ajax({
-        type: "POST",
-        url: '@Url.Action("Check", "Login")',
-        dataType: "json",
-        headers: { 
-          "RequestVerificationToken": $('input[name="__RequestVerificationToken"]').val(),
-        },
-        data: {
-          username : $('#username').val(),
-          password : $('#password').val(),
-        },
-        error: function (result) {
-          Toast.fire({
-            icon: 'error',
-            title: 'Please contact developer'
-          })
-        },
-        success: function (result) {
-          //debugger;
-          console.log(result);
-          if (result.success) {
-            location.reload()
-          }
-          else {
+      if (result.isConfirmed) {
+        $.ajax({
+          type: "POST",
+          url: '@Url.Action("Check", "Login")',
+          dataType: "json",
+          headers: { 
+            "RequestVerificationToken": $('input[name="__RequestVerificationToken"]').val(),
+          },
+          data: {
+            username : $('#username').val(),
+            password : $('#password').val(),
+          },
+          error: function (result) {
             Toast.fire({
               icon: 'error',
-              title: 'Login failed, please try again',
-              timer: 4000,
+              title: 'Please contact developer'
             })
+          },
+          success: function (result) {
+            console.log(result);
+            if (result.success) {
+              location.reload()
+            }
+            else {
+              Toast.fire({
+                icon: 'error',
+                title: 'Login failed, please try again',
+                timer: 4000,
+              })
+            }
           }
-        }
-      });
+        });
+      }
     })    
   })
+
+  $(document).on('keyup', '.swal2-input', function(e){
+    if(e.keyCode==13){
+      Swal.clickConfirm()
+    }
+  })
+
   $('#btn-change_password').click(function(){
     Swal.fire({
       title: 'Change password',

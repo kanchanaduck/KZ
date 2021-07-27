@@ -9,7 +9,7 @@ using Microsoft.Extensions.Configuration;
 using PTum.Data;
 using PTum.Models;
 
-namespace Ptum.Controllers
+namespace PTum.Controllers
 {
     public class UserController : Controller
     {

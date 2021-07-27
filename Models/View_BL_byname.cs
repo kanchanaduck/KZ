@@ -9,7 +9,7 @@ namespace PTum.Models
     {
         [Key]
         public string prd_name { get; set; }
-        public int bl { get; set; }
+        public int? bl { get; set; }
         public string prd_img { get; set; }
         public string prd_category { get; set; }
 
