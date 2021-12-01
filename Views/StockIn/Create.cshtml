@@ -6,42 +6,73 @@
     ViewData["Title"] = "Stock in";
 }
 
-<div class="col-4 offset-4">
+<div class="row">
+
+<div class="col-6 offset-3">
   <form asp-action="Create">
     <div class="card card-outline card-success">
       <div class="card-header">
-          <h3 class="card-title">Add stock</h3>
+          <h3 class="card-title">Add qty</h3>
       </div>
       <div class="card-body">
-        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-        <div class="form-group">
-            <label asp-for="prd_code" class="control-label"></label>
-            <select asp-for="prd_code" class="form-control">
-            </select>
-            <span asp-validation-for="prd_code" class="text-danger"></span>
+        <div class="row">
+            <div class="col">
+              <label class="control-label">Type</label>
+            </div>
+            <div class="col">
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="radio1" id="type1" checked value="All">
+                    <label class="form-check-label" for="type1">All</label>
+                </div>
+            </div>
+            <div class="col">
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="radio1" id="type2" value="Accessories">
+                    <label class="form-check-label" for="type2">Accessories</label>
+                </div>
+            </div>
+            <div class="col">
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="radio1" id="type3" value="Desktop">
+                    <label class="form-check-label" for="type3">Desktop</label>
+                </div>
+            </div>
         </div>
-        <div class="form-group">
-            <label asp-for="prd_inqty" class="control-label"></label>
-            <input asp-for="prd_inqty" class="form-control" />
-            <span asp-validation-for="prd_inqty" class="text-danger"></span>
-        </div>
-        <div class="form-group text-right">
-          <button type="submit" class="btn btn-success">Submit</button>
-          <a class="btn btn-outline-secondary" href='@Url.Action("Index", "StockIn")'>Back</a>
-        </div>
+          <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+          <div class="form-group">
+              <label asp-for="prd_code" class="control-label"></label>
+              <select asp-for="prd_code" class="form-control">
+              </select>
+              <span asp-validation-for="prd_code" class="text-danger"></span>
+          </div>
+          <div class="form-group">
+              <label asp-for="prd_inqty" class="control-label"></label>
+              <input asp-for="prd_inqty" class="form-control" />
+              <span asp-validation-for="prd_inqty" class="text-danger"></span>
+          </div>
+          <div class="form-group text-right">
+            <button type="submit" class="btn btn-success">Submit</button>
+            <a class="btn btn-outline-secondary" href='@Url.Action("Index", "StockIn")'>Back</a>
+          </div>
       </div>
     </div>
   </form>
 </div>
 
+</div>
+
 @section scripts{
 <script type="text/babel">
+
+    var type = "All";
+    var url = '@Url.Action("All", "Product")'
+
     $('#prd_code').select2({
       theme: 'bootstrap4',
       placeholder: 'Product code',
       allowClear: true,
       ajax: {
-        url: '@Url.Action("Accessories", "Product")',
+        url: url,
         dataType: 'json',
         processResults: function (data) {
           var option = $.map(data, function (obj) {
@@ -50,8 +81,69 @@
             return obj;
           });
           return {results: option};
-        }          
+        }                  
       } 
-    }) 
-  </script> 
+      })
+
+    $('input[name="radio1"]').on('change', function(){
+      type = $(this).val()
+      url = '@Url.Action("", "Product")'+"/"+type
+
+
+      if(type=="Desktop"){
+        $('#prd_inqty').val("1");
+      }
+      else{
+        $('#prd_inqty').val("");
+      }
+
+
+      $('#prd_code').select2({
+      theme: 'bootstrap4',
+      placeholder: 'Product code',
+      allowClear: true,
+      ajax: {
+        url: url,
+        dataType: 'json',
+        processResults: function (data) {
+          var option = $.map(data, function (obj) {
+            obj.id = obj.prd_code ;
+            obj.text = obj.prd_code + " - " + obj.prd_name; 
+            return obj;
+          });
+          return {results: option};
+        }                  
+      } 
+      })
+
+    })
+
+
+    
+@*     $('#prd_code_desktop').select2({
+      theme: 'bootstrap4',
+      placeholder: 'Product code',
+      allowClear: true,
+      ajax: {
+        url: '@Url.Action("Desktop", "Product")',
+        dataType: 'json',
+        processResults: function (data) {
+          var option = $.map(data, function (obj) {
+            obj.id = obj.prd_code ;
+            obj.text = obj.prd_code + " - " + obj.prd_name; 
+            return obj;
+          });
+          return {results: option};
+        },
+        data: function (params) {
+          var query = {
+            q: params.term,
+          }
+
+          // Query parameters will be ?search=[term]&type=public
+          return query;
+        }      
+      } 
+    })  *@ 
+</script> 
 }

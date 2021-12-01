@@ -11,7 +11,6 @@ namespace PTum.Models
         public int id_in { get; set; }
         [Required]
         [Display(Name = "Code")]
-        [StringLength(12)]
         public string prd_code { get; set; }
         [Required]
         [Display(Name = "Qty")]

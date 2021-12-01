@@ -32,14 +32,45 @@ namespace Ptum.Controllers
             return View(await _context.Tb_mst_product.ToListAsync());
             // return Ok(await _context.Tb_mst_product.ToListAsync());
         }
-        public async Task<IActionResult> Accessories()
+        public async Task<IActionResult> Accessories(String q)
         {
+            if(q==null){
+                q="";
+            }
             var data = await _context.Tb_mst_product
                          .Select(e=>new {e.Id, e.prd_code, e.prd_name, e.prd_category}) 
                          .Distinct()
                          .Where(e=>e.prd_category=="Accessories")
+                         .Where(e=>e.prd_code.Contains(q))
                          .ToListAsync();
             return  Json(data);
+        }
+
+        public async Task<IActionResult> Desktop(String q)
+        {
+            if(q==null){
+                q="";
+            }
+            var data = await _context.Tb_mst_product
+                         .Select(e=>new {e.Id, e.prd_code, e.prd_name, e.prd_category}) 
+                         .Distinct()
+                         .Where(e=>e.prd_category!="Accessories")
+                         .Where(e=>e.prd_code.Contains(q))
+                         .ToListAsync();
+            return  Json(data);
+        }
+
+        public async Task<IActionResult> All(String q)
+        {
+            if(q==null){
+                q="";
+            }
+            var data = await _context.Tb_mst_product
+                         .Select(e=>new {e.Id, e.prd_code, e.prd_name, e.prd_category}) 
+                         .Distinct()
+                         .Where(e=>e.prd_code.Contains(q) || e.prd_name.Contains(q))
+                         .ToListAsync();             
+            return Json(data);
         }
 
         public async Task<IActionResult> Balance()
