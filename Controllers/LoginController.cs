@@ -15,9 +15,8 @@ namespace Ptum.Controllers
     {
         private readonly LoginContext _context;
         public const string SessionUsername  = "_Name";
-        public string SessionEmpNo { get; private set; } 
-        public string SessionFirstname { get; private set; }
-        public string SessionLastname { get; private set; }
+        public const string SessionPosition  = "_Position";
+
         public LoginController(LoginContext context)
         {
             _context = context;
@@ -40,6 +39,7 @@ namespace Ptum.Controllers
             }
             else{
                 HttpContext.Session.SetString(SessionUsername, user.username);
+                HttpContext.Session.SetString(SessionPosition, user.position);
             }
 
             return Ok(new { 

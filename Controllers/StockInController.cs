@@ -111,7 +111,7 @@ namespace Ptum.Controllers
                     prd_code = tb_stock_in.prd_code,
                     prd_inqty = tb_stock_in.prd_inqty,
                     in_datetime = DateTime.Now,
-                    in_name = HttpContext.Session.GetString("_Name")?? "014496",
+                    in_name = HttpContext.Session.GetString("_Name")?? "000000",
                 });
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));

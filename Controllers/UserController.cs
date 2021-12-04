@@ -69,19 +69,18 @@ namespace PTum.Controllers
         {
             if (ModelState.IsValid)
             {
-                // _context.Add(tbUser);
                 _context.Add(new tbUser
-                    {
-                        username = tbUser.username,
-                        password = tbUser.password,
-                        det = tbUser.det,
-                        det_code = tbUser.det_code,
-                        name = tbUser.name,
-                        last_name = tbUser.last_name,
-                        emp_code = tbUser.emp_code,
-                        position = "1",
-                        project_id = Int16.Parse(_config["MyProject:id"])
-                    });
+                {
+                    username = tbUser.username,
+                    password = tbUser.password,
+                    det = tbUser.det,
+                    det_code = tbUser.det_code,
+                    name = tbUser.name,
+                    last_name = tbUser.last_name,
+                    emp_code = tbUser.emp_code,
+                    position = tbUser.position,
+                    project_id = Int16.Parse(_config["MyProject:id"])
+                });
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
@@ -135,9 +134,9 @@ namespace PTum.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                 return RedirectToAction(nameof(Index));
             }
-            return View(tbUser);
+            return View(tbUser); 
         }
 
         // GET: User/Delete/5

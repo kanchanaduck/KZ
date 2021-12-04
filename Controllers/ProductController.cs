@@ -140,7 +140,7 @@ namespace Ptum.Controllers
                     prd_fixasset_name = tb_mst_product.prd_fixasset_name,
                     prd_serial_num = tb_mst_product.prd_serial_num,
                     prd_regis_datetime = DateTime.Now,
-                    prd_regis_name = HttpContext.Session.GetString("_Name")?? "014496"
+                    prd_regis_name = HttpContext.Session.GetString("_Name")?? "000000"
                 });
                 var insert_mst_prod_success = await _context.SaveChangesAsync() > 0;
 
@@ -150,7 +150,7 @@ namespace Ptum.Controllers
                         prd_code = tb_mst_product.prd_code,
                         prd_inqty = 1,
                         in_datetime = DateTime.Now,
-                        in_name = HttpContext.Session.GetString("_Name") ?? "014496"
+                        in_name = HttpContext.Session.GetString("_Name") ?? "000000"
                     });
                     await _context.SaveChangesAsync();
                 }
@@ -194,7 +194,7 @@ namespace Ptum.Controllers
                     using var transaction = _context.Database.BeginTransaction();
                     try
                     {
-                        for (int row = 4; row <= rowCount; row++){
+                        for (int row = 17; row <= rowCount; row++){
                             var insert_mst_prod_success = false;
                             if(worksheet.Cells[row, 3].Value!=null){
                                 _context.Add(new Tb_mst_product
@@ -208,7 +208,7 @@ namespace Ptum.Controllers
                                     prd_fixasset_name = worksheet.Cells[row, 8].Value==null? null:worksheet.Cells[row, 8].Value.ToString().Trim(),
                                     prd_serial_num = worksheet.Cells[row, 9].Value==null? null:worksheet.Cells[row, 9].Value.ToString().Trim(),
                                     prd_regis_datetime = DateTime.Now,
-                                    prd_regis_name = HttpContext.Session.GetString("_Name")
+                                    prd_regis_name = HttpContext.Session.GetString("_Name")?? "000000"
                                 });
                                 insert_mst_prod_success = await _context.SaveChangesAsync() > 0;
                                 Console.WriteLine(row+" "+insert_mst_prod_success);
@@ -222,7 +222,7 @@ namespace Ptum.Controllers
                                         prd_code = worksheet.Cells[row, 3].Value.ToString().Trim(),
                                         prd_inqty = 1,
                                         in_datetime = DateTime.Now,
-                                        in_name = HttpContext.Session.GetString("_Name"),
+                                        in_name = HttpContext.Session.GetString("_Name") ?? "000000"
                                     });
                                     await _context.SaveChangesAsync();
                                 }

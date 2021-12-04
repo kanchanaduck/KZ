@@ -31,6 +31,8 @@ namespace PTum.Models
         public string full_name { get; set; }
         [Display(Name = "Emp ID")]
         public string emp_code { get; set; }
+        [Required]
+        [Display(Name = "Position")]
         public string position { get; set; }
         public int? project_id { get; set; }
         public Boolean? status { get; set; }
